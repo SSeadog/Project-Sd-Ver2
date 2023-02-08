@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: hair
+  m_Name: hair - Copy
   m_Shader: {fileID: 4800000, guid: 235ca6f7bbc0ead4990f386a7ec24292, type: 3}
   m_ShaderKeywords: []
   m_CustomRenderQueue: -1

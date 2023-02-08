@@ -509,7 +509,7 @@ GameObject:
   - component: {fileID: 411524}
   - component: {fileID: 9566220}
   m_Layer: 0
-  m_Name: Tower Mage
+  m_Name: Tower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
