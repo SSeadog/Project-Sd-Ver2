@@ -12,7 +12,9 @@ public class TowerBase : MonoBehaviour
     Transform _oppsiteTowerTransform;
     float _moveDeg = 0f;
     float _degGap = 80f;
+    
     List<Transform> _lstWaypoint = new List<Transform>();
+    public List<Transform> LstWayPoint { get { return _lstWaypoint; } }
 
     public virtual void Init()
     {

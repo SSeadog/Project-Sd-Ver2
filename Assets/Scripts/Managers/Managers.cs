@@ -32,6 +32,7 @@ public class Managers : MonoBehaviour
             DontDestroyOnLoad(go);
 
             _instance = manager;
+            _instance._game.Init();
         }
     }
 

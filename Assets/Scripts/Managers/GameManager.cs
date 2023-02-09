@@ -45,7 +45,8 @@ public class GameManager
 
     public void Init()
     {
-
+        playerMonsters= new List<GameObject>();
+        enemyMonsters= new List<GameObject>();
     }
 
     public void Clear()

@@ -4,15 +4,17 @@ using UnityEngine;
 
 public abstract class Stat : MonoBehaviour
 {
-    protected int _maxHp;
-    protected int _hp;
-    protected int _power;
-    protected float _speed;
+    [SerializeField] protected int _maxHp;
+    [SerializeField] protected int _hp;
+    [SerializeField] protected int _power;
+    [SerializeField] protected float _speed;
+    [SerializeField] protected float _size;
 
     public int MaxHp { get { return _maxHp; } set { _maxHp = value; } }
     public int Hp { get { return _hp; } set { _maxHp = value; } }
     public int Power { get { return _power; } set { _maxHp = value; } }
     public float Speed { get { return _speed; } set { _speed = value; } }
+    public float Size { get { return _size;} set { _size = value; } }
 
     void Start()
     {
