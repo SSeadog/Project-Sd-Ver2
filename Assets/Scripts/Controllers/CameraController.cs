@@ -11,7 +11,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] float _heightOffset = 1.3f;
     [SerializeField] float _rightOffset = 0.4f;
 
-    float _sensitivity = 0.1f;
+    float _sensitivity = 0.2f;
     float _moveSpeed = 20f;
     float minRotX = -80f;
     float maxRotX = 80f;

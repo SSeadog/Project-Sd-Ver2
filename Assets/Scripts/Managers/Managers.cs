@@ -9,7 +9,7 @@ public class Managers : MonoBehaviour
 
     public GameManager _game = new GameManager();
 
-    public static GameManager Game { get { return _instance._game; } }
+    public static GameManager Game { get { return Instance._game; } }
 
     static void Init()
     {
