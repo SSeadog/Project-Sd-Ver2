@@ -10,7 +10,7 @@ public abstract class Monster : MonoBehaviour
     protected MonsterStat _stat;
 
     // AI
-    protected NavMeshAgent navMeshAgent;
+    protected NavMeshAgent _navMeshAgent;
     public float brainSpeed = 0.5f;
     protected List<Transform> waypoints;
     protected int currentWayPointIndex;
@@ -29,11 +29,30 @@ public abstract class Monster : MonoBehaviour
     Vector3 beforePosition;
 
     // State
-    enum MonsterState { Idle, Walking, LookingForPath, Chasing, Attacking, Returning, Dead };
+    enum MonsterState
+    {
+        Idle,
+        Walking,
+        LookingForPath,
+        Chasing,
+        Attacking,
+        Returning,
+        Dead
+    };
     MonsterState currentMonsterState = MonsterState.Idle;
 
     Rigidbody r;
-    protected Animator anim;
+    
+    protected Animator _anim;
+    protected enum Anims
+    {
+        Idle,
+        Walk,
+        Attack,
+        Dead
+    }
+    protected Anims _curAnim = Anims.Idle;
+
     //public Image hpBar;
 
     public virtual void Init()
@@ -51,9 +70,11 @@ public abstract class Monster : MonoBehaviour
         Init();
 
         _stat = GetComponent<MonsterStat>();
-        navMeshAgent = GetComponent<NavMeshAgent>();
+        _navMeshAgent = GetComponent<NavMeshAgent>();
         r = GetComponent<Rigidbody>();
-        anim = GetComponent<Animator>();
+        _anim = GetComponent<Animator>();
+
+        _stat.OnDeadAction += OnDead;
     }
 
     void Update()
@@ -79,12 +100,12 @@ public abstract class Monster : MonoBehaviour
         switch (currentMonsterState)
         {
             case MonsterState.Idle:
-                anim.SetBool("IsWalk", false);
+                PlayAnim(Anims.Idle);
                 currentMonsterState = MonsterState.LookingForPath;
 
                 break;
             case MonsterState.Walking:
-                anim.SetBool("IsWalk", true);
+                PlayAnim(Anims.Walk);
                 attackTarget = FindAttackTarget();
 
                 if (attackTarget)
@@ -92,21 +113,21 @@ public abstract class Monster : MonoBehaviour
                     beforePosition = transform.position;
                     currentMonsterState = MonsterState.Chasing;
                 }
-                else if (!attackTarget && currentWayPointIndex < waypoints.Count && navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
+                else if (!attackTarget && currentWayPointIndex < waypoints.Count && _navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
                 {
                     currentMonsterState = MonsterState.LookingForPath;
                     break;
                 }
                 else if (!attackTarget)
                 {
-                    navMeshAgent.SetDestination(waypoints[currentWayPointIndex].position);
+                    _navMeshAgent.SetDestination(waypoints[currentWayPointIndex].position);
                     break;
                 }
 
                 break;
             case MonsterState.LookingForPath:
-                navMeshAgent.isStopped = false;
-                anim.SetBool("IsWalk", true);
+                PlayAnim(Anims.Idle);
+                _navMeshAgent.isStopped = false;
                 attackTarget = FindAttackTarget();
 
                 if (attackTarget)
@@ -120,13 +141,13 @@ public abstract class Monster : MonoBehaviour
                 if (currentWayPointIndex < waypoints.Count - 1)
                 {
                     currentWayPointIndex += 1;
-                    navMeshAgent.SetDestination(waypoints[currentWayPointIndex].position);
+                    _navMeshAgent.SetDestination(waypoints[currentWayPointIndex].position);
                     currentMonsterState = MonsterState.Walking;
                 }
                 // 끝까지 갔다면 무조건 타워로 이동
                 else
                 {
-                    navMeshAgent.SetDestination(Managers.Game.enemyTower.transform.position);
+                    _navMeshAgent.SetDestination(Managers.Game.enemyTower.transform.position);
                     currentMonsterState = MonsterState.Walking;
                 }
 
@@ -142,10 +163,10 @@ public abstract class Monster : MonoBehaviour
                 // attackTarget이 있고 attackRange 밖에 있다면 추격 거리 기록
                 else if (attackTarget && Vector3.Distance(transform.position, attackTarget.transform.position) - curTargetSize > _stat.AttackRange)
                 {
-                    anim.SetBool("IsWalk", true);
+                    PlayAnim(Anims.Walk);
 
-                    navMeshAgent.isStopped = false;
-                    navMeshAgent.SetDestination(attackTarget.transform.position);
+                    _navMeshAgent.isStopped = false;
+                    _navMeshAgent.SetDestination(attackTarget.transform.position);
                     targetChaseDistance += Vector3.Distance(transform.position, beforePosition);
                     beforePosition = transform.position;
 
@@ -156,7 +177,7 @@ public abstract class Monster : MonoBehaviour
                         targetChaseDistance = 0f;
 
                         UpdateWayPoint();
-                        navMeshAgent.SetDestination(waypoints[currentWayPointIndex].position);
+                        _navMeshAgent.SetDestination(waypoints[currentWayPointIndex].position);
 
                         currentMonsterState = MonsterState.Returning;
                     }
@@ -177,11 +198,11 @@ public abstract class Monster : MonoBehaviour
                     break;
                 }
 
-                navMeshAgent.isStopped = true;
-                anim.SetBool("IsWalk", false);
+                PlayAnim(Anims.Attack);
+                _navMeshAgent.isStopped = true;
 
                 // 공격 대상이 시야 안에 있다면
-                if (navMeshAgent.remainingDistance - curTargetSize < _stat.SightRange)
+                if (_navMeshAgent.remainingDistance - curTargetSize < _stat.SightRange)
                 {
                     // 공격 대상이 공격 범위 밖에 있다면
                     if (Vector3.Distance(transform.position, attackTarget.transform.position) - curTargetSize > _stat.AttackRange)
@@ -221,15 +242,24 @@ public abstract class Monster : MonoBehaviour
 
                 break;
             case MonsterState.Returning:
-                if (navMeshAgent.remainingDistance < navMeshAgent.stoppingDistance)
+                if (_navMeshAgent.remainingDistance < _navMeshAgent.stoppingDistance)
                 {
                     currentMonsterState = MonsterState.LookingForPath;
                 }
 
-                anim.SetBool("IsWalk", true);
+                PlayAnim(Anims.Walk);
 
                 break;
         }
+    }
+
+    void PlayAnim(Anims animation)
+    {
+        if (_curAnim == animation)
+            return;
+
+        _curAnim = animation;
+        _anim.CrossFade(_curAnim.ToString(), 0.1f);
     }
 
     void FaceTarget()
@@ -256,32 +286,13 @@ public abstract class Monster : MonoBehaviour
         }
     }
 
-    public void OnDamage(int damage = 10)
+    public virtual void OnDead()
     {
-        if (_stat.Hp <= 0)
-            return;
-
-        _stat.Hp = _stat.Hp - damage < 0 ? 0 : _stat.Hp - damage;
-
-        //hpBar.rectTransform.localScale = new Vector3((float)curHP / (float)HP, 1f, 1f);
-
-        if (_stat.Hp <= 0)
-            RemoveThis();
-
-    }
-    protected abstract void OnRemoveThis();
-
-    public virtual void RemoveThis()
-    {
-        OnRemoveThis();
-
+        PlayAnim(Anims.Dead);
         currentMonsterState = MonsterState.Dead;
 
         GetComponent<CapsuleCollider>().enabled = false;
-        navMeshAgent.isStopped = true;
-        anim.SetTrigger("Dead");
-
-        Destroy(gameObject, 1f);
+        _navMeshAgent.isStopped = true;
     }
 
     protected virtual bool CheckAttackCollisionTagname(string collder_tag)
@@ -291,12 +302,10 @@ public abstract class Monster : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!CheckAttackCollisionTagname(other.tag))
-            return;
+        //if (!CheckAttackCollisionTagname(other.tag))
+        //    return;
 
         Stat attackerStat = other.GetComponent<Stat>();
-        int damage = attackerStat.Power;
-
-        OnDamage(damage);
+        _stat.OnAttacked(attackerStat);
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    float _moveSpeed = 3f;
+    PlayerStat _stat;
 
     Animator _anim;
 
@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        Managers mg = Managers.Instance;
+        _stat = GetComponent<PlayerStat>();
         _anim = GetComponent<Animator>();
 
         /////////////////////// 적절한 곳으로 옮겨야 함
@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour
 
         _moveVec = new Vector3(x, 0, y);
 
-        transform.Translate(_moveVec * Time.deltaTime * _moveSpeed);
+        transform.Translate(_moveVec * Time.deltaTime * _stat.Speed);
     }
 
     void Rotate()
@@ -133,7 +133,7 @@ public class PlayerController : MonoBehaviour
             Vector3 moveVec = (raycastHit.point - _arrowPosition.transform.position).normalized;
             GameObject instantArrow = Instantiate(_arrowOriginal, _arrowPosition.transform.position, Quaternion.LookRotation(moveVec));
             Rigidbody arrowRigid = instantArrow.GetComponent<Rigidbody>();
-            arrowRigid.AddForce(moveVec * 1000f);
+            arrowRigid.AddForce(moveVec * 2000f);
         }
     }
 

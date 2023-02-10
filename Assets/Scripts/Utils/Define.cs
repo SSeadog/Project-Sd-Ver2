@@ -10,7 +10,7 @@ public class Define
         PlayerTower,
         EnemyTower,
         Player,
-        PlayerMonster,
-        EnemyMonster
+        PlayerMeleeMonster,
+        EnemyMeleeMonster
     }
 }

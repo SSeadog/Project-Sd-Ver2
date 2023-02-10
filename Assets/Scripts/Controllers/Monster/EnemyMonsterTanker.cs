@@ -13,7 +13,7 @@ public class EnemyMonsterTanker : EnemyMonster
 
     protected override void AttckTarget()
     {
-        anim.SetTrigger("IsAttack");
+
     }
 
     void KnockBack()

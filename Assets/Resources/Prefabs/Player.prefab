@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2027600746
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2027600747}
+  m_Layer: 0
+  m_Name: ArrowPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2027600747
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2027600746}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.235, y: 0.979, z: 0.581}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8798871826703571465}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1208157882757752207
 GameObject:
   m_ObjectHideFlags: 0
@@ -1283,6 +1314,7 @@ GameObject:
   - component: {fileID: 8798871826703696325}
   - component: {fileID: 8798871826703696326}
   - component: {fileID: 8798871826703696321}
+  - component: {fileID: 388028096}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1304,6 +1336,7 @@ Transform:
   m_Children:
   - {fileID: 8798871826703571725}
   - {fileID: 8798871826703571577}
+  - {fileID: 2027600747}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1369,6 +1402,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49378bedb53ae2e41bb1fc7d09053a04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &388028096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8798871826703599145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5d600b3ccfc84643b6932ab51058bbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHp: 0
+  _hp: 0
+  _power: 0
+  _speed: 0
+  _size: 0
 --- !u!1 &8798871826703599147
 GameObject:
   m_ObjectHideFlags: 0
@@ -7190,6 +7240,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8798871826703571777}
     m_Modifications:
+    - target: {fileID: -1486513006965831077, guid: d03c4353fda446d4f8df56d422578d64, type: 3}
+      propertyPath: _baseStat
+      value: 
+      objectReference: {fileID: 388028096}
     - target: {fileID: 1717406733745140, guid: d03c4353fda446d4f8df56d422578d64, type: 3}
       propertyPath: m_Name
       value: Wooden Bow

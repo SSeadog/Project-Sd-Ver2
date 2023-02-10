@@ -65,20 +65,18 @@ public abstract class EnemyMonster : Monster
         return minDistanceGameObject;
     }
 
-    protected override void OnRemoveThis()
-    {
-        for (int i = 0; i < Managers.Game.enemyMonsters.Count; i++)
-        {
-            if (name == Managers.Game.enemyMonsters[i].name)
-                Managers.Game.enemyMonsters.RemoveAt(i);
-        }
-    }
-
     protected override bool CheckAttackCollisionTagname(string collder_tag)
     {
         if (collder_tag == "Ground" || collder_tag == "EnemyMonster" || collder_tag == "PlayerMonster" || collder_tag == "Player" || collder_tag == "EnemyProjectile")
             return false;
 
         return true;
+    }
+
+    public override void OnDead()
+    {
+        base.OnDead();
+
+        Managers.Game.Despawn(Define.ObjectType.EnemyMeleeMonster, gameObject);
     }
 }

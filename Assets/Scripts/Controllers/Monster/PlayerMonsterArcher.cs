@@ -9,7 +9,7 @@ public class PlayerMonsterArcher : PlayerMonster
 
     protected override void AttckTarget()
     {
-        anim.SetTrigger("IsAttack");
+
         // 활 쏘기
         GameObject instanceArrow = Instantiate(arrow, arrowPosition.position, transform.rotation * Quaternion.Euler(90f, 0, 0));
         Rigidbody arrowRigid = instanceArrow.GetComponent<Rigidbody>();

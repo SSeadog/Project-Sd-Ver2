@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public abstract class Stat : MonoBehaviour
 {
@@ -11,10 +12,12 @@ public abstract class Stat : MonoBehaviour
     [SerializeField] protected float _size;
 
     public int MaxHp { get { return _maxHp; } set { _maxHp = value; } }
-    public int Hp { get { return _hp; } set { _maxHp = value; } }
-    public int Power { get { return _power; } set { _maxHp = value; } }
+    public int Hp { get { return _hp; } set { _hp = value; } }
+    public int Power { get { return _power; } set { _power = value; } }
     public float Speed { get { return _speed; } set { _speed = value; } }
     public float Size { get { return _size;} set { _size = value; } }
+
+    public UnityAction OnDeadAction;
 
     void Start()
     {
@@ -26,7 +29,7 @@ public abstract class Stat : MonoBehaviour
         int damage = attacker.Power;
         Hp -= damage;
 
-        if (Hp < 0)
+        if (Hp <= 0)
         {
             Hp = 0;
             OnDead();
@@ -35,6 +38,9 @@ public abstract class Stat : MonoBehaviour
 
     public virtual void OnDead()
     {
+        Debug.Log("OnDead");
         // 죽었을 때 할 행동
+        if (OnDeadAction != null)
+            OnDeadAction.Invoke();
     }
 }

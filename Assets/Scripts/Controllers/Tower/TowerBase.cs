@@ -8,6 +8,7 @@ public class TowerBase : MonoBehaviour
     // 스탯 -> Stat스크립트 따로 분리
     TowerStat _stat;
     // 스폰 루트
+    Transform _spawnRoot;
     // waypoints
     Transform _oppsiteTowerTransform;
     float _moveDeg = 0f;
@@ -18,6 +19,7 @@ public class TowerBase : MonoBehaviour
 
     public virtual void Init()
     {
+        _spawnRoot = transform.Find("spawnRoot");
     }
 
     void Start()
@@ -143,5 +145,10 @@ public class TowerBase : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public Transform GetSpawnRoot()
+    {
+        return _spawnRoot;
     }
 }

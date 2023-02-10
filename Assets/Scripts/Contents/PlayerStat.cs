@@ -8,8 +8,8 @@ public class PlayerStat : Stat
     {
         _maxHp = 100;
         _hp = 100;
-        _power = 10;
-        _speed = 4f;
+        _power = 30;
+        _speed = 10f;
     }
 
     void Update()

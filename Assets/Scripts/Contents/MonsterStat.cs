@@ -16,9 +16,9 @@ public class MonsterStat : Stat
 
     private void Start()
     {
-        _maxHp = 300;
+        _maxHp = 100;
         _hp = _maxHp;
-        _power = 10;
+        _power = 5;
         _speed = 5f;
         _attackRange = 3f;
         _sightRange = 13f;

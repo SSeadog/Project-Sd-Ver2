@@ -4,16 +4,15 @@ using UnityEngine;
 
 public class PlayerMonsterSworder : PlayerMonster
 {
-    [SerializeField]
-    private GameObject effect;
+    //[SerializeField]
+    //private GameObject effect;
 
-    [SerializeField]
-    AudioSource audioSource;
+    //[SerializeField]
+    //AudioSource audioSource;
 
     protected override void AttckTarget()
     {
-        anim.SetTrigger("IsAttack");
-        audioSource.PlayOneShot(audioSource.clip);
+        //audioSource.PlayOneShot(audioSource.clip);
     }
 
     public void OnAttackEvent()

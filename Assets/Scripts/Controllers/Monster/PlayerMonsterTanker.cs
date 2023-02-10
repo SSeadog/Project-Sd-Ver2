@@ -15,7 +15,7 @@ public class PlayerMonsterTanker : PlayerMonster
 
     protected override void AttckTarget()
     {
-        anim.SetTrigger("IsAttack");
+
     }
 
     void KnockBack()

@@ -12,7 +12,6 @@ public class EnemyMonsterSworder : EnemyMonster
 
     protected override void AttckTarget()
     {
-        anim.SetTrigger("IsAttack");
         //audioSource.PlayOneShot(audioSource.clip);
     }
 

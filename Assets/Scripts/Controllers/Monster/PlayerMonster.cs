@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public abstract class PlayerMonster : Monster
 {
-    private void Start()
+    public override void Init()
     {
         base.Init();
 
@@ -16,7 +16,6 @@ public abstract class PlayerMonster : Monster
         waypoints = Managers.Game.enemyTower.GetComponent<EnemyTowerController>().LstWayPoint;
 
         currentWayPointIndex = 0;
-        navMeshAgent.SetDestination(waypoints[currentWayPointIndex].position);
     }
 
     protected override GameObject FindAttackTarget()
@@ -55,20 +54,18 @@ public abstract class PlayerMonster : Monster
         return minDistanceGameObject;
     }
 
-    protected override void OnRemoveThis()
-    {
-        for (int i = 0; i < Managers.Game.playerMonsters.Count; i++)
-        {
-            if (name == Managers.Game.playerMonsters[i].name)
-                Managers.Game.playerMonsters.RemoveAt(i);
-        }
-    }
-
     protected override bool CheckAttackCollisionTagname(string collder_tag)
     {
         if (collder_tag == "Ground" || collder_tag == "PlayerProjectile" || collder_tag == "PlayerMonster" || collder_tag == "EnemyMonster" || collder_tag == "Player" || collder_tag == "Tower")
             return false;
 
         return true;
+    }
+
+    public override void OnDead()
+    {
+        base.OnDead();
+
+        Managers.Game.Despawn(Define.ObjectType.PlayerMeleeMonster, gameObject);
     }
 }
