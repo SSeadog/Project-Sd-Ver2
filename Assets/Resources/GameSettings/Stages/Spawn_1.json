@@ -1,0 +1,194 @@
+﻿[
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "5"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "5.5"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "6"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "SpawnTime": "6.5"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "SpawnTime": "7"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "SpawnTime": "7.5"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "35"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "35.5"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "36"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "SpawnTime": "36.5"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "SpawnTime": "37"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "SpawnTime": "37.5"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "65"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "65.5"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "66"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "SpawnTime": "66.5"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "SpawnTime": "67"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "SpawnTime": "67.5"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "95"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "95.5"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "96"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "SpawnTime": "96.5"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "SpawnTime": "97"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "SpawnTime": "97.5"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "125"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "125.5"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "126"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "SpawnTime": "126.5"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "SpawnTime": "127"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "SpawnTime": "127.5"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "125"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "125.5"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "126"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "SpawnTime": "126.5"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "SpawnTime": "127"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "SpawnTime": "127.5"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "125"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "125.5"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "126"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "SpawnTime": "126.5"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "SpawnTime": "127"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "SpawnTime": "127.5"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "125"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "125.5"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "126"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "SpawnTime": "126.5"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "SpawnTime": "127"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "SpawnTime": "127.5"
+  }
+]

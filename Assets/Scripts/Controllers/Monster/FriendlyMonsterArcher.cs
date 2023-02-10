@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMonsterArcher : PlayerMonster
+public class FriendlyMonsterArcher : FriendlyMonster
 {
     public GameObject arrow;
     public Transform arrowPosition;

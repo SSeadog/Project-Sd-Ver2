@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMonsterSworder : PlayerMonster
+public class FriendlyMonsterSworder : FriendlyMonster
 {
     //[SerializeField]
     //private GameObject effect;

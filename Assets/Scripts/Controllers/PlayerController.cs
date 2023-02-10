@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 public class PlayerController : MonoBehaviour
 {
@@ -46,6 +47,7 @@ public class PlayerController : MonoBehaviour
         Move();
         Rotate();
         Attack();
+        Spawn();
         Anim();
     }
 
@@ -74,6 +76,15 @@ public class PlayerController : MonoBehaviour
             _isAttack = true;
             _anim.CrossFade("Attack", 0.2f);
             _curAnim = Anims.Attack;
+        }
+    }
+
+    void Spawn()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            GameObject instance = Managers.Game.Spawn(Define.ObjectType.FriendlyMeleeMonster, "Prefabs/Monsters/FriendlyMeleeMonster");
+            instance.transform.position = Managers.Game.friendlyTower.GetComponent<FriendlyTowerController>().GetSpawnRoot().position;
         }
     }
 

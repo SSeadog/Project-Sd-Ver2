@@ -1,0 +1,32 @@
+{
+  "Player": {
+    "HP": 100,
+    "PosX": 75,
+    "PosY": 0.35,
+    "PosZ": 45,
+    "RotX": 0,
+    "RotY": 0,
+    "RotZ": 0,
+    "path": "Prefabs/Characters/Player"
+  },
+  "PlayerTower": {
+    "HP": 300,
+    "PosX": 75,
+    "PosY": 0,
+    "PosZ": 30,
+    "RotX": 0,
+    "RotY": 270,
+    "RotZ": 0,
+    "path": "Prefabs/Towers/PlayerTower"
+  },
+  "EnemyTower": {
+    "HP": 300,
+    "PosX": 75,
+    "PosY": 0,
+    "PosZ": 190,
+    "RotX": 0,
+    "RotY": 270,
+    "RotZ": 0,
+    "path": "Prefabs/Towers/EnemyTower"
+  }
+}

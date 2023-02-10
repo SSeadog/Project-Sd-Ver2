@@ -75,6 +75,8 @@ public abstract class Monster : MonoBehaviour
         _anim = GetComponent<Animator>();
 
         _stat.OnDeadAction += OnDead;
+        _navMeshAgent.stoppingDistance = _stat.AttackRange;
+        _navMeshAgent.speed = _stat.Speed;
     }
 
     void Update()
@@ -302,8 +304,8 @@ public abstract class Monster : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //if (!CheckAttackCollisionTagname(other.tag))
-        //    return;
+        if (!CheckAttackCollisionTagname(other.tag))
+            return;
 
         Stat attackerStat = other.GetComponent<Stat>();
         _stat.OnAttacked(attackerStat);

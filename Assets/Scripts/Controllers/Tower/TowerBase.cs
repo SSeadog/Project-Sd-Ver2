@@ -24,14 +24,14 @@ public class TowerBase : MonoBehaviour
 
     void Start()
     {
-        if (_type == Define.ObjectType.PlayerTower)
+        if (_type == Define.ObjectType.FriendlyTower)
         {
             _oppsiteTowerTransform = Managers.Game.enemyTower.transform;
             _moveDeg = 180f;
         }
         else if (_type == Define.ObjectType.EnemyTower)
         {
-            _oppsiteTowerTransform = Managers.Game.playerTower.transform;
+            _oppsiteTowerTransform = Managers.Game.friendlyTower.transform;
             _moveDeg = 0f;
         }
 
@@ -40,11 +40,13 @@ public class TowerBase : MonoBehaviour
         StartCoroutine(CoWaypointsCheck());
     }
 
+    // waypoints를 위치에 맞게 적절한 순서로 정리하는 함수(내용에 맞게 이름 변경 필요)
     void SetWaypoints()
     {
-        // 1. waypoints에서 가장 가까운 점 찾기 -> 상대 타워에서 가장 가까운 점 찾기로 수정해야할 거 같은데
-        // 2. 1번의 점에서 가장 가까운 점 찾기
-        // 반복
+        // 1. 반대편 타워에서 가장 가까운 점을 제일 먼저 둠
+        // 2. 해당 점을 시작으로 가장 가까운 다음 점들을 찾아나감
+        // 2-1. 거리가 가장 짧으면서 이동방향에 맞는지를 체크. 이동방향 같은 경우 각도를 통해 판단
+        // * 적절하게 waypoint를 배치하지 않으면 모든 waypoint를 이용하지 않을 수도 있음
 
         Transform[] waypoints = transform.Find("waypoints").GetComponentsInChildren<Transform>();
 
@@ -87,11 +89,6 @@ public class TowerBase : MonoBehaviour
 
                 if (waypoints[i].position == basePoint.position)
                     continue;
-
-                if (basePoint.name == "waypoint (10)")
-                {
-                    int a = 0;
-                }
 
                 float dist = Vector3.Distance(basePoint.position, waypoints[i].position);
                 if (dist < minDist)

@@ -43,6 +43,6 @@ public class Managers : MonoBehaviour
 
     void Update()
     {
-        
+        _instance._game.UpdatePlayTime(Time.deltaTime);
     }
 }

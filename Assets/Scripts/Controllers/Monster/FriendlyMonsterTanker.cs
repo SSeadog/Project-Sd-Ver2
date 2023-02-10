@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
-public class PlayerMonsterTanker : PlayerMonster
+public class FriendlyMonsterTanker : FriendlyMonster
 {
     [SerializeField]
     private Transform attackPosition;

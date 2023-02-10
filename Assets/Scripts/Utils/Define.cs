@@ -7,10 +7,19 @@ public class Define
     public enum ObjectType
     {
         None,
-        PlayerTower,
+        FriendlyTower,
         EnemyTower,
         Player,
-        PlayerMeleeMonster,
+        FriendlyMeleeMonster,
         EnemyMeleeMonster
+    }
+
+    public enum TagName
+    {
+        Player,
+        FriendlyMonster,
+        FriendlyProjectile,
+        EnemyMonster,
+        EnemyProjectile,
     }
 }

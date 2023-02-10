@@ -4,49 +4,40 @@ using UnityEngine;
 
 public class GameManager
 {
-    // 스테이지 데이터
-    //// 선택한 스테이지 번호
+    // Todo
+    // Spawn()에서 path로 original 못 찾으면 예외처리? 해주기
+    // 인스턴스할 게임오브젝트를 로드해뒀는지 확인 후 안했을 때만 로드하도록, 이미 로드했었다면 로드해둔 거 이용하도록 개선 필요
 
-    // 인게임 데이터
-    //// 현재 스테이지 번호
-
-    //// 플레이어 타워
-    //// 적 타워
-
-    //// 플레이어 몬스터들
-    //// 적 몬스터들
-
-    //// 플레이어
-
-    //// 플레이 시간
-
-    //// 소환된 아군 몬스터 수
-    //// 소환된 적 몬스터 수
-    //// 처치된 아군 몬스터 수
-    //// 처치된 적 몬스터 수
-
+    // 게임스테이지와 그 외 스테이지 구분 필요. 게임스테이지에서만 동작해야하는 부분들이 있음(playTime기록 등)
     public int stageNum;
 
-    public GameObject playerTower;
+    public GameObject friendlyTower;
     public GameObject enemyTower;
 
     // 몬스터 관리는 id를 부여해서 Dict로 할지 그냥 List로 할지 고민중
-    public List<GameObject> playerMonsters;
+    public List<GameObject> friendlyMonsters;
     public List<GameObject> enemyMonsters;
 
     public GameObject player;
 
     public float playTime;
 
-    public int spawnedPlayerMonsterCount;
+    public int spawnedFriendlyMonsterCount;
     public int spawnedEnemyMonsterCount;
-    public int killedPlayerMonsterCount;
+    public int killedFriendlyMonsterCount;
     public int killedEnemyMonsterCount;
 
     public void Init()
     {
-        playerMonsters= new List<GameObject>();
+        playTime = 0f;
+
+        friendlyMonsters = new List<GameObject>();
         enemyMonsters= new List<GameObject>();
+    }
+
+    public void UpdatePlayTime(float time)
+    {
+        playTime += time;
     }
 
     public GameObject Spawn(Define.ObjectType objectType, string path, Transform parent = null)
@@ -56,8 +47,8 @@ public class GameManager
 
         switch (objectType)
         {
-            case Define.ObjectType.PlayerMeleeMonster:
-                Managers.Game.playerMonsters.Add(instance);
+            case Define.ObjectType.FriendlyMeleeMonster:
+                Managers.Game.friendlyMonsters.Add(instance);
                 break;
             case Define.ObjectType.EnemyMeleeMonster:
                 Managers.Game.enemyMonsters.Add(instance);
@@ -71,8 +62,8 @@ public class GameManager
     {
         switch (objectType)
         {
-            case Define.ObjectType.PlayerMeleeMonster:
-                Managers.Game.playerMonsters.Remove(gameObject);
+            case Define.ObjectType.FriendlyMeleeMonster:
+                Managers.Game.friendlyMonsters.Remove(gameObject);
                 break;
             case Define.ObjectType.EnemyMeleeMonster:
                 Managers.Game.enemyMonsters.Remove(gameObject);
@@ -86,19 +77,19 @@ public class GameManager
     {
         stageNum = -1;
 
-        playerTower = null;
+        friendlyTower = null;
         enemyTower = null;
 
-        playerMonsters.Clear();
+        friendlyMonsters.Clear();
         enemyMonsters.Clear();
 
         player = null;
 
         playTime = 0f;
 
-        spawnedPlayerMonsterCount = 0;
+        spawnedFriendlyMonsterCount = 0;
         spawnedEnemyMonsterCount = 0;
-        killedPlayerMonsterCount = 0;
+        killedFriendlyMonsterCount = 0;
         killedEnemyMonsterCount = 0;
     }
 }

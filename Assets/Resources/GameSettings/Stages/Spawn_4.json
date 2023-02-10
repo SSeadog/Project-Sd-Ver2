@@ -1,0 +1,194 @@
+﻿[
+  {
+    "type": "Melee",
+    "spawnTime": "5"
+  },
+  {
+    "type": "Melee",
+    "spawnTime": "5.5"
+  },
+  {
+    "type": "Melee",
+    "spawnTime": "6"
+  },
+  {
+    "type": "Range",
+    "SpawnTime": "6.5"
+  },
+  {
+    "type": "Range",
+    "SpawnTime": "7"
+  },
+  {
+    "type": "Range",
+    "SpawnTime": "7.5"
+  },
+  {
+    "type": "Melee",
+    "spawnTime": "35"
+  },
+  {
+    "type": "Melee",
+    "spawnTime": "35.5"
+  },
+  {
+    "type": "Melee",
+    "spawnTime": "36"
+  },
+  {
+    "type": "Range",
+    "SpawnTime": "36.5"
+  },
+  {
+    "type": "Range",
+    "SpawnTime": "37"
+  },
+  {
+    "type": "Range",
+    "SpawnTime": "37.5"
+  },
+  {
+    "type": "Melee",
+    "spawnTime": "65"
+  },
+  {
+    "type": "Melee",
+    "spawnTime": "65.5"
+  },
+  {
+    "type": "Melee",
+    "spawnTime": "66"
+  },
+  {
+    "type": "Range",
+    "SpawnTime": "66.5"
+  },
+  {
+    "type": "Range",
+    "SpawnTime": "67"
+  },
+  {
+    "type": "Range",
+    "SpawnTime": "67.5"
+  },
+  {
+    "type": "Melee",
+    "spawnTime": "95"
+  },
+  {
+    "type": "Melee",
+    "spawnTime": "95.5"
+  },
+  {
+    "type": "Melee",
+    "spawnTime": "96"
+  },
+  {
+    "type": "Range",
+    "SpawnTime": "96.5"
+  },
+  {
+    "type": "Range",
+    "SpawnTime": "97"
+  },
+  {
+    "type": "Range",
+    "SpawnTime": "97.5"
+  },
+  {
+    "type": "Melee",
+    "spawnTime": "125"
+  },
+  {
+    "type": "Melee",
+    "spawnTime": "125.5"
+  },
+  {
+    "type": "Melee",
+    "spawnTime": "126"
+  },
+  {
+    "type": "Range",
+    "SpawnTime": "126.5"
+  },
+  {
+    "type": "Range",
+    "SpawnTime": "127"
+  },
+  {
+    "type": "Range",
+    "SpawnTime": "127.5"
+  },
+  {
+    "type": "Melee",
+    "spawnTime": "125"
+  },
+  {
+    "type": "Melee",
+    "spawnTime": "125.5"
+  },
+  {
+    "type": "Melee",
+    "spawnTime": "126"
+  },
+  {
+    "type": "Range",
+    "SpawnTime": "126.5"
+  },
+  {
+    "type": "Range",
+    "SpawnTime": "127"
+  },
+  {
+    "type": "Range",
+    "SpawnTime": "127.5"
+  },
+  {
+    "type": "Melee",
+    "spawnTime": "125"
+  },
+  {
+    "type": "Melee",
+    "spawnTime": "125.5"
+  },
+  {
+    "type": "Melee",
+    "spawnTime": "126"
+  },
+  {
+    "type": "Range",
+    "SpawnTime": "126.5"
+  },
+  {
+    "type": "Range",
+    "SpawnTime": "127"
+  },
+  {
+    "type": "Range",
+    "SpawnTime": "127.5"
+  },
+  {
+    "type": "Melee",
+    "spawnTime": "125"
+  },
+  {
+    "type": "Melee",
+    "spawnTime": "125.5"
+  },
+  {
+    "type": "Melee",
+    "spawnTime": "126"
+  },
+  {
+    "type": "Range",
+    "SpawnTime": "126.5"
+  },
+  {
+    "type": "Range",
+    "SpawnTime": "127"
+  },
+  {
+    "type": "Range",
+    "SpawnTime": "127.5"
+  }
+]

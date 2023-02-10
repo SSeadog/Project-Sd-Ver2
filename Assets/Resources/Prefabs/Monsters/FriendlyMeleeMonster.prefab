@@ -1695,8 +1695,8 @@ GameObject:
   - component: {fileID: 1479645886211837591}
   - component: {fileID: 1479645886211837590}
   m_Layer: 0
-  m_Name: PlayerMeleeMonster
-  m_TagString: Untagged
+  m_Name: FriendlyMeleeMonster
+  m_TagString: FriendlyMonster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

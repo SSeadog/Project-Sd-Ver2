@@ -12,9 +12,9 @@ public abstract class EnemyMonster : Monster
     {
         base.Init();
 
-        towerPosition = Managers.Game.playerTower.transform.position;
+        towerPosition = Managers.Game.friendlyTower.transform.position;
 
-        waypoints = Managers.Game.playerTower.GetComponent<PlayerTowerController>().LstWayPoint;
+        waypoints = Managers.Game.friendlyTower.GetComponent<FriendlyTowerController>().LstWayPoint;
         
         currentWayPointIndex = 0;
     }
@@ -26,12 +26,12 @@ public abstract class EnemyMonster : Monster
         float minDistance = 9999999f;
 
         // 플레이어 몬스터 중에서 거리가 가장 가까운 녀석 찾기
-        for (int i = 0; i < Managers.Game.playerMonsters.Count; i++)
+        for (int i = 0; i < Managers.Game.friendlyMonsters.Count; i++)
         {
-            if (Vector3.Distance(transform.position, Managers.Game.playerMonsters[i].transform.position) - 1f < minDistance)
+            if (Vector3.Distance(transform.position, Managers.Game.friendlyMonsters[i].transform.position) - 1f < minDistance)
             {
-                minDistance = Vector3.Distance(transform.position, Managers.Game.playerMonsters[i].transform.position) - 1f;
-                minDistanceGameObject = Managers.Game.playerMonsters[i];
+                minDistance = Vector3.Distance(transform.position, Managers.Game.friendlyMonsters[i].transform.position) - 1f;
+                minDistanceGameObject = Managers.Game.friendlyMonsters[i];
                 curAttackTargetType = AttackTargetType.Monster;
                 curTargetSize = 1f;
             }
@@ -51,7 +51,7 @@ public abstract class EnemyMonster : Monster
         if (Vector3.Distance(transform.position, towerPosition) - 14f < minDistance)
         {
             minDistance = Vector3.Distance(transform.position, towerPosition) - 14f;
-            minDistanceGameObject = Managers.Game.playerTower;
+            minDistanceGameObject = Managers.Game.friendlyTower;
             curAttackTargetType = AttackTargetType.Tower;
             curTargetSize = 14f;
         }
@@ -65,9 +65,9 @@ public abstract class EnemyMonster : Monster
         return minDistanceGameObject;
     }
 
-    protected override bool CheckAttackCollisionTagname(string collder_tag)
+    protected override bool CheckAttackCollisionTagname(string collider_tag)
     {
-        if (collder_tag == "Ground" || collder_tag == "EnemyMonster" || collder_tag == "PlayerMonster" || collder_tag == "Player" || collder_tag == "EnemyProjectile")
+        if (collider_tag == Define.TagName.EnemyProjectile.ToString())
             return false;
 
         return true;

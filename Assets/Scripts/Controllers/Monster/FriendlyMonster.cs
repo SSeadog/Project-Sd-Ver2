@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
-public abstract class PlayerMonster : Monster
+public abstract class FriendlyMonster : Monster
 {
     public override void Init()
     {
@@ -56,7 +56,7 @@ public abstract class PlayerMonster : Monster
 
     protected override bool CheckAttackCollisionTagname(string collder_tag)
     {
-        if (collder_tag == "Ground" || collder_tag == "PlayerProjectile" || collder_tag == "PlayerMonster" || collder_tag == "EnemyMonster" || collder_tag == "Player" || collder_tag == "Tower")
+        if (collder_tag == Define.TagName.FriendlyProjectile.ToString())
             return false;
 
         return true;
@@ -66,6 +66,6 @@ public abstract class PlayerMonster : Monster
     {
         base.OnDead();
 
-        Managers.Game.Despawn(Define.ObjectType.PlayerMeleeMonster, gameObject);
+        Managers.Game.Despawn(Define.ObjectType.FriendlyMeleeMonster, gameObject);
     }
 }

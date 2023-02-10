@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 7666864664421553595}
   m_Layer: 0
   m_Name: PlayerArrow
-  m_TagString: Untagged
+  m_TagString: FriendlyProjectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
