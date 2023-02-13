@@ -11,29 +11,27 @@ public class CameraController : MonoBehaviour
     [SerializeField] float _heightOffset = 1.3f;
     [SerializeField] float _rightOffset = 0.4f;
 
-    float _sensitivity = 0.2f;
-    float _moveSpeed = 20f;
+    float _sensitivity = 30f;
     float minRotX = -80f;
     float maxRotX = 80f;
 
-    Vector3 _initMousePos;
-
-    void Start()
+    public void Init()
     {
-        _initMousePos = Input.mousePosition;
+        _target = Managers.Game.player.transform;
     }
 
-    void Update()
+    void LateUpdate()
     {
-        Vector3 mousePos = Input.mousePosition;
-        Vector3 rot = new Vector3(-Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0f) * _sensitivity;
+        if (_target != null)
+            return;
 
-        if (rot.x < minRotX)
-            rot.x = minRotX;
-        if (rot.x > maxRotX)
-            rot.x = maxRotX;
+        // Todo
+        // 위나 아래를 볼때 카메라 뒤집어지는 오류 수정 필요
 
-        transform.eulerAngles += rot;
+        Vector3 rot = new Vector3(-Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0f) * Time.deltaTime * _sensitivity;
+
+        rot = transform.eulerAngles + rot;
+        transform.eulerAngles = rot;
 
         Quaternion euler = Quaternion.Euler(0, transform.eulerAngles.y, 0);
         transform.position = _target.position + (euler * Vector3.back * _backOffset) + (Vector3.up * _heightOffset) + (_target.transform.right * _rightOffset);

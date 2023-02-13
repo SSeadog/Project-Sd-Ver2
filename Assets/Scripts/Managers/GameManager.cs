@@ -14,6 +14,8 @@ public class GameManager
     public GameObject friendlyTower;
     public GameObject enemyTower;
 
+    public List<Define.spawnItem> spawnInfo;
+
     // 몬스터 관리는 id를 부여해서 Dict로 할지 그냥 List로 할지 고민중
     public List<GameObject> friendlyMonsters;
     public List<GameObject> enemyMonsters;
@@ -31,8 +33,22 @@ public class GameManager
     {
         playTime = 0f;
 
+        spawnInfo = Util.LoadJsonList<List<Define.spawnItem>>("GameSettings/Stages/Spawn_1");
+
         friendlyMonsters = new List<GameObject>();
         enemyMonsters= new List<GameObject>();
+    }
+
+    public void SetActiveCursor()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    public void SetDeActiveCursor()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     public void UpdatePlayTime(float time)
@@ -71,6 +87,40 @@ public class GameManager
         }
 
         Object.Destroy(gameObject, 1f);
+    }
+
+    public void RestartStage()
+    {
+        // 몬스터들 전부 삭제
+        for (int i = 0; i < friendlyMonsters.Count; i++)
+            GameObject.Destroy(friendlyMonsters[i].gameObject);
+        for (int i = 0; i < enemyMonsters.Count; i++)
+            GameObject.Destroy(enemyMonsters[i].gameObject);
+
+        friendlyMonsters.Clear();
+        enemyMonsters.Clear();
+
+        // 스폰 정보 초기화
+        ReSetSpawnInfo();
+
+        // 시간 초기화
+        playTime = 0f;
+
+        // 플레이어 위치 초기화 -> Scene스크립트가 처리
+        // 플레이어 체력 초기화 -> Scene스크립트가 처리
+        // 타워들 체력 초기화 -> Scene스크립트가 처리
+        Managers.Scene.Clear();
+        Managers.Scene.CurrentScene.Init();
+    }
+
+    public void ReSetSpawnInfo()
+    {
+        spawnedEnemyMonsterCount = 0;
+
+        for (int i = 0; i < Managers.Game.spawnInfo.Count; i++)
+        {
+            Managers.Game.spawnInfo[i].isSpawned = false;
+        }
     }
 
     public void Clear()

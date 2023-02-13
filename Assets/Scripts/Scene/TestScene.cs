@@ -2,33 +2,44 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestScene : MonoBehaviour
+public class TestScene : BaseScene
 {
-    void Start()
+    public override void Init()
     {
-        GameObject playerTowerOriginal = Resources.Load<GameObject>("Prefabs/PlayerTower");
-        GameObject playerTower = Instantiate(playerTowerOriginal);
-        playerTower.GetComponent<FriendlyTowerController>().Init();
+        Dictionary<string, Define.SettingInfo> settingInfo = Managers.Data.settingInfo;
+        List<string> keys = new List<string>(settingInfo.Keys);
+        foreach (string key in keys)
+        {
+            GameObject original = Resources.Load<GameObject>($"Prefabs/{key}");
+            GameObject instance = Instantiate(original);
+            instance.name = key;
+            instance.transform.position = new Vector3(settingInfo[key].PosX, settingInfo[key].PosY, settingInfo[key].PosZ);
+            instance.transform.eulerAngles = new Vector3(settingInfo[key].RotX, settingInfo[key].RotY, settingInfo[key].RotZ);
 
-        GameObject enemyTowerOriginal = Resources.Load<GameObject>("Prefabs/EnemyTower");
-        GameObject enemyTower = Instantiate(enemyTowerOriginal);
-        enemyTower.GetComponent<EnemyTowerController>().Init();
+            if (key == Define.ObjectType.FriendlyTower.ToString())
+            {
+                instance.GetComponent<FriendlyTowerController>().Init();
+            }
+            else if (key == Define.ObjectType.EnemyTower.ToString())
+            {
+                instance.GetComponent<EnemyTowerController>().Init();
+            }
+            else if (key == Define.ObjectType.Player.ToString())
+            {
+                Managers.Game.player = instance;
 
-        //for (int i = 0; i < 10; i++)
-        //{
-        //    GameObject enemyMonster = Managers.Game.Spawn(Define.ObjectType.EnemyMeleeMonster, "Prefabs/Monsters/EnemyMeleeMonster");
-        //    enemyMonster.transform.position = Managers.Game.enemyTower.GetComponent<EnemyTowerController>().GetSpawnRoot().position;
-        //}
-        
-        //for (int i = 0; i < 8; i++)
-        //{
-        //    GameObject playerMonster = Managers.Game.Spawn(Define.ObjectType.PlayerMeleeMonster, "Prefabs/Monsters/PlayerMeleeMonster");
-        //    playerMonster.transform.position = Managers.Game.playerTower.GetComponent<PlayerTowerController>().GetSpawnRoot().position;
-        //}
+            }
+        }
+
+        CameraController cc = GameObject.FindObjectOfType<CameraController>();
+        cc.Init();
     }
 
-    void Update()
+    public override void Clear()
     {
-        
+        // 老窜 悼利积己沁带 player, towers父 公炼扒 昏力
+        Destroy(Managers.Game.player);
+        Destroy(Managers.Game.friendlyTower);
+        Destroy(Managers.Game.enemyTower);
     }
 }

@@ -24,6 +24,8 @@ public class TowerBase : MonoBehaviour
 
     void Start()
     {
+        Init();
+
         if (_type == Define.ObjectType.FriendlyTower)
         {
             _oppsiteTowerTransform = Managers.Game.enemyTower.transform;

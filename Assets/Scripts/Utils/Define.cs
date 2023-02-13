@@ -22,4 +22,22 @@ public class Define
         EnemyMonster,
         EnemyProjectile,
     }
+
+    public class SettingInfo
+    {
+        public float PosX;
+        public float PosY;
+        public float PosZ;
+        public float RotX;
+        public float RotY;
+        public float RotZ;
+        public string path;
+    }
+
+    public class spawnItem
+    {
+        public ObjectType type;
+        public float spawnTime;
+        public bool isSpawned = false;
+    }
 }

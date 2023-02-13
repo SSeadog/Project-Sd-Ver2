@@ -33,10 +33,7 @@ public class PlayerController : MonoBehaviour
         _stat = GetComponent<PlayerStat>();
         _anim = GetComponent<Animator>();
 
-        /////////////////////// 적절한 곳으로 옮겨야 함
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-        /////////////////////
+        Managers.Game.SetDeActiveCursor();
 
         _arrowOriginal = Resources.Load<GameObject>("Prefabs/Weapons/PlayerArrow");
         _arrowPosition = transform.Find("ArrowPosition").gameObject;
@@ -78,7 +75,8 @@ public class PlayerController : MonoBehaviour
             _curAnim = Anims.Attack;
         }
     }
-
+    
+    // Spawn()이 플레이어 컨트롤러 밑에 둘만 한가..? 따로 빼야하나?? 고민 필요
     void Spawn()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
