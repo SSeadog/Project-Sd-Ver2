@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
         _stat = GetComponent<PlayerStat>();
         _anim = GetComponent<Animator>();
 
-        Managers.Game.SetDeActiveCursor();
+        Managers.Game.SetActiveCursor(false);
 
         _arrowOriginal = Resources.Load<GameObject>("Prefabs/Weapons/PlayerArrow");
         _arrowPosition = transform.Find("ArrowPosition").gameObject;

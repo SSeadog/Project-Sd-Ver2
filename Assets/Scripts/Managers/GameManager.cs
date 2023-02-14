@@ -39,16 +39,23 @@ public class GameManager
         enemyMonsters= new List<GameObject>();
     }
 
-    public void SetActiveCursor()
+    public void SetActiveCursor(bool isActive)
     {
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        if (isActive)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
     }
 
     public void SetDeActiveCursor()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        
     }
 
     public void UpdatePlayTime(float time)

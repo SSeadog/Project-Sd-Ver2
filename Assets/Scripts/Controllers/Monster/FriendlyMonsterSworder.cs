@@ -17,9 +17,9 @@ public class FriendlyMonsterSworder : FriendlyMonster
 
     public void OnAttackEvent()
     {
-        if (attackTarget == null)
+        if (_attackTarget == null)
             return;
 
-        attackTarget.GetComponent<Stat>().OnAttacked(_stat);
+        _attackTarget.GetComponent<Stat>().GetAttacked(_stat);
     }
 }

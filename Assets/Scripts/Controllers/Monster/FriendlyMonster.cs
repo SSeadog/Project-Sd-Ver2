@@ -11,11 +11,11 @@ public abstract class FriendlyMonster : Monster
     {
         base.Init();
 
-        towerPosition = Managers.Game.enemyTower.transform.position;
+        _towerPosition = Managers.Game.enemyTower.transform.position;
 
-        waypoints = Managers.Game.enemyTower.GetComponent<EnemyTowerController>().LstWayPoint;
+        _waypoints = Managers.Game.enemyTower.GetComponent<EnemyTowerController>().LstWayPoint;
 
-        currentWayPointIndex = 0;
+        _currentWayPointIndex = 0;
     }
 
     protected override GameObject FindAttackTarget()
@@ -31,18 +31,18 @@ public abstract class FriendlyMonster : Monster
             {
                 minDistance = Vector3.Distance(transform.position, Managers.Game.enemyMonsters[i].transform.position) - 1f;
                 minDistanceGameObject = Managers.Game.enemyMonsters[i];
-                curAttackTargetType = AttackTargetType.Monster;
-                curTargetSize = 1f;
+                _curAttackTargetType = AttackTargetType.Monster;
+                _curTargetSize = 1f;
             }
         }
 
         // 적 타워가 거리가 더 가까운지 확인
-        if (Vector3.Distance(transform.position, towerPosition) - 14f < minDistance)
+        if (Vector3.Distance(transform.position, _towerPosition) - 14f < minDistance)
         {
-            minDistance = Vector3.Distance(transform.position, towerPosition) - 14f;
+            minDistance = Vector3.Distance(transform.position, _towerPosition) - 14f;
             minDistanceGameObject = Managers.Game.enemyTower;
-            curAttackTargetType = AttackTargetType.Tower;
-            curTargetSize = 14f;
+            _curAttackTargetType = AttackTargetType.Tower;
+            _curTargetSize = 14f;
         }
 
         // 가장 가까운 공격대상이 시야 밖에 있다면

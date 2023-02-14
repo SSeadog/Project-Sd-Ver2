@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class PlayerStatusUI : MonoBehaviour
 {
+    // Todo
+    // Rp ¿¬µ¿
+
     Transform _hpBar;
     Transform _rpBar;
 
@@ -31,7 +34,14 @@ public class PlayerStatusUI : MonoBehaviour
 
     void Update()
     {
+        if (Managers.Game.player == null)
+            return;
+
         PlayerStat player = Managers.Game.player.GetComponent<PlayerStat>();
+        
+        if (player.MaxHp == 0)
+            return;
+
         float percent = (float)player.Hp / player.MaxHp;
         SetHpBar(percent);
     }

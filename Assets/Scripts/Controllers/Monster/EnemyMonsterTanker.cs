@@ -30,7 +30,7 @@ public class EnemyMonsterTanker : EnemyMonster
                 rbody.AddExplosionForce(1000f, attackPosition.position, 7f);
                 StartCoroutine(SetVelocityZero(rbody));
 
-                rbody.GetComponent<Stat>().OnAttacked(_stat);
+                rbody.GetComponent<Stat>().GetAttacked(_stat);
             }
         }
     }

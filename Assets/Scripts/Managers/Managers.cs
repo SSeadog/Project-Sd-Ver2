@@ -50,4 +50,11 @@ public class Managers : MonoBehaviour
     {
         _instance._game.UpdatePlayTime(Time.deltaTime);
     }
+
+    public static void Clear()
+    {
+        _instance._data.Clear();
+        _instance._game.Clear();
+        _instance._scene.Clear();
+    }
 }

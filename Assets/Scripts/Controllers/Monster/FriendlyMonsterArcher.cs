@@ -14,6 +14,6 @@ public class FriendlyMonsterArcher : FriendlyMonster
         GameObject instanceArrow = Instantiate(arrow, arrowPosition.position, transform.rotation * Quaternion.Euler(90f, 0, 0));
         Rigidbody arrowRigid = instanceArrow.GetComponent<Rigidbody>();
 
-        arrowRigid.AddForce((attackTarget.transform.position - transform.position + Vector3.up * 0.5f).normalized * 2000f);
+        arrowRigid.AddForce((_attackTarget.transform.position - transform.position + Vector3.up * 0.5f).normalized * 2000f);
     }
 }

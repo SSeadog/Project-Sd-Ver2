@@ -20,17 +20,17 @@ public class ESCMenuUI : MonoBehaviour
         // 게임 멈추기
         Time.timeScale = 0f;
 
-        Managers.Game.SetActiveCursor();
+        Managers.Game.SetActiveCursor(true);
 
         gameObject.SetActive(true);
     }
 
-    public void CloseUI()
+    public void CloseUI(bool isMouseActive = false)
     {
         // 게임 재개
         Time.timeScale = 1f;
 
-        Managers.Game.SetDeActiveCursor();
+        Managers.Game.SetActiveCursor(isMouseActive);
 
         gameObject.SetActive(false);
     }
@@ -42,12 +42,13 @@ public class ESCMenuUI : MonoBehaviour
 
     public void OnRestartButtonClicked()
     {
-        Managers.Game.RestartStage();
         CloseUI();
+        Managers.Game.RestartStage();
     }
 
     public void OnToStagesButtonClicked()
     {
+        CloseUI(true);
         Managers.Scene.LoadScene("StagesScene");
     }
 }

@@ -22,7 +22,7 @@ public class CameraController : MonoBehaviour
 
     void LateUpdate()
     {
-        if (_target != null)
+        if (_target == null)
             return;
 
         // Todo
@@ -31,6 +31,18 @@ public class CameraController : MonoBehaviour
         Vector3 rot = new Vector3(-Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0f) * Time.deltaTime * _sensitivity;
 
         rot = transform.eulerAngles + rot;
+        if (rot.x < 0)
+            rot.x += 360f;
+
+        //if (rot.x > 80f && rot.x < )
+        //    rot.x = 80f;
+
+        if (rot.x < 280f && rot.x > 270f)
+            rot.x = 280f;
+
+        if (rot.x > 80f && rot.x < 90f)
+            rot.x = 80f;
+
         transform.eulerAngles = rot;
 
         Quaternion euler = Quaternion.Euler(0, transform.eulerAngles.y, 0);

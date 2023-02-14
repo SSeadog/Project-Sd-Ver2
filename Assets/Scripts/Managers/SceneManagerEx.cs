@@ -9,7 +9,8 @@ public class SceneManagerEx
 
     public void LoadScene(string sceneName)
     {
-        Managers.Scene.LoadScene(sceneName);
+        Managers.Clear();
+        SceneManager.LoadScene(sceneName);
     }
 
     public void Clear()

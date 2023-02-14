@@ -12,11 +12,11 @@ public abstract class EnemyMonster : Monster
     {
         base.Init();
 
-        towerPosition = Managers.Game.friendlyTower.transform.position;
+        _towerPosition = Managers.Game.friendlyTower.transform.position;
 
-        waypoints = Managers.Game.friendlyTower.GetComponent<FriendlyTowerController>().LstWayPoint;
+        _waypoints = Managers.Game.friendlyTower.GetComponent<FriendlyTowerController>().LstWayPoint;
         
-        currentWayPointIndex = 0;
+        _currentWayPointIndex = 0;
     }
 
     protected override GameObject FindAttackTarget()
@@ -32,8 +32,8 @@ public abstract class EnemyMonster : Monster
             {
                 minDistance = Vector3.Distance(transform.position, Managers.Game.friendlyMonsters[i].transform.position) - 1f;
                 minDistanceGameObject = Managers.Game.friendlyMonsters[i];
-                curAttackTargetType = AttackTargetType.Monster;
-                curTargetSize = 1f;
+                _curAttackTargetType = AttackTargetType.Monster;
+                _curTargetSize = 1f;
             }
         }
 
@@ -43,17 +43,17 @@ public abstract class EnemyMonster : Monster
         {
             minDistance = Vector3.Distance(transform.position, playerPosition) - 1f;
             minDistanceGameObject = GameObject.FindGameObjectWithTag("Player");
-            curAttackTargetType = AttackTargetType.Monster;
-            curTargetSize = 1f;
+            _curAttackTargetType = AttackTargetType.Monster;
+            _curTargetSize = 1f;
         }
 
         // 플레이어 타워가 거리가 더 가까운지 확인
-        if (Vector3.Distance(transform.position, towerPosition) - 14f < minDistance)
+        if (Vector3.Distance(transform.position, _towerPosition) - 14f < minDistance)
         {
-            minDistance = Vector3.Distance(transform.position, towerPosition) - 14f;
+            minDistance = Vector3.Distance(transform.position, _towerPosition) - 14f;
             minDistanceGameObject = Managers.Game.friendlyTower;
-            curAttackTargetType = AttackTargetType.Tower;
-            curTargetSize = 14f;
+            _curAttackTargetType = AttackTargetType.Tower;
+            _curTargetSize = 14f;
         }
 
         // 가장 가까운 공격대상이 시야 밖에 있다면 
