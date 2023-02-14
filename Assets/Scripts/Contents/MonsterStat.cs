@@ -16,11 +16,14 @@ public class MonsterStat : Stat
 
     private void Start()
     {
+        // Todo
+        // 스탯 표 json으로 만들어야함
+
         _maxHp = 100;
         _hp = _maxHp;
         _power = 5;
         _speed = 5f;
-        _attackRange = 3f;
+        _attackRange = 7f;
         _sightRange = 13f;
         _attackSpeed = 1f;
         _maxChaseDistance = 10f;

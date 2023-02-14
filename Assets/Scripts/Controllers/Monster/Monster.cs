@@ -73,10 +73,13 @@ public abstract class Monster : MonoBehaviour
         _stat.OnDeadAction += OnDead;
         _navMeshAgent.stoppingDistance = _stat.AttackRange;
         _navMeshAgent.speed = _stat.Speed;
+
+        _currentWayPointIndex = 0;
     }
 
     void Update()
     {
+        Debug.Log(_navMeshAgent.speed);
         if (_currentMonsterState != MonsterState.Dead)
         {
             //  AI 실행 주기
@@ -196,7 +199,6 @@ public abstract class Monster : MonoBehaviour
                     break;
                 }
 
-                PlayAnim(Anims.Attack);
                 _navMeshAgent.isStopped = true;
 
                 // 공격 대상이 시야 안에 있다면
@@ -215,6 +217,7 @@ public abstract class Monster : MonoBehaviour
                     // 공격 준비가 됐다면 공격
                     if (_isAttackReady)
                     {
+                        PlayAnim(Anims.Attack);
                         AttckTarget();
                         _isAttackReady = false;
                     }
@@ -253,7 +256,7 @@ public abstract class Monster : MonoBehaviour
         }
     }
 
-    void PlayAnim(Anims animation)
+    protected void PlayAnim(Anims animation)
     {
         if (_curAnim == animation)
             return;
