@@ -1,0 +1,56 @@
+{
+  "FriendlyMeleeMonster": {
+    "MaxHp": 150,
+    "Power": 5,
+    "Speed": 5,
+    "AttackRange": 3,
+    "SightRange": 14,
+    "AttackSpeed": 1,
+    "MaxChaseDistance": 10
+  },
+  "FriendlyRangedMonster": {
+    "MaxHp": 80,
+    "Power": 20,
+    "Speed": 5,
+    "AttackRange": 7,
+    "SightRange": 14,
+    "AttackSpeed": 1,
+    "MaxChaseDistance": 6
+  },
+  "FriendlyPowerMonster": {
+    "MaxHp": 200,
+    "Power": 15,
+    "Speed": 5,
+    "AttackRange": 3,
+    "SightRange": 14,
+    "AttackSpeed": 2,
+    "MaxChaseDistance": 10
+  },
+  "EnemyMeleeMonster": {
+    "MaxHp": 150,
+    "Power": 5,
+    "Speed": 5,
+    "AttackRange": 3,
+    "SightRange": 14,
+    "AttackSpeed": 1,
+    "MaxChaseDistance": 10
+  },
+  "EnemyRangedMonster": {
+    "MaxHp": 80,
+    "Power": 20,
+    "Speed": 5,
+    "AttackRange": 7,
+    "SightRange": 14,
+    "AttackSpeed": 1,
+    "MaxChaseDistance": 6
+  },
+  "EnemyPowerMonster": {
+    "MaxHp": 200,
+    "Power": 15,
+    "Speed": 5,
+    "AttackRange": 3,
+    "SightRange": 14,
+    "AttackSpeed": 2,
+    "MaxChaseDistance": 10
+  }
+}

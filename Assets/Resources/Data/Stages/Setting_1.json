@@ -1,0 +1,29 @@
+{
+  "Player": {
+    "PosX": 0,
+    "PosY": 0,
+    "PosZ": 20,
+    "RotX": 0,
+    "RotY": 0,
+    "RotZ": 0,
+    "path": "Prefabs/Player"
+  },
+  "FriendlyTower": {
+    "PosX": 0,
+    "PosY": 0,
+    "PosZ": 0,
+    "RotX": 0,
+    "RotY": 0,
+    "RotZ": 0,
+    "path": "Prefabs/Towers/FriendlyTower"
+  },
+  "EnemyTower": {
+    "PosX": 0,
+    "PosY": 0,
+    "PosZ": 128,
+    "RotX": 0,
+    "RotY": 0,
+    "RotZ": 0,
+    "path": "Prefabs/Towers/EnemyTower"
+  }
+}

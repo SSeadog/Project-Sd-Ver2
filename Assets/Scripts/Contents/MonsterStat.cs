@@ -14,18 +14,19 @@ public class MonsterStat : Stat
     public float AttackSpeed { get { return _attackSpeed; } set { _attackSpeed = value; } }
     public float MaxChaseDistance { get { return _maxChaseDistance; } set { _maxChaseDistance = value; } }
 
+    public void Init(Define.MonsterStat stat)
+    {
+        _maxHp = stat.MaxHp;
+        _hp = _maxHp;
+        _power = stat.Power;
+        _speed = stat.Speed;
+        _attackRange = stat.AttackRange;
+        _sightRange = stat.SightRange;
+        _attackSpeed = stat.AttackSpeed;
+        _maxChaseDistance = stat.MaxChaseDistance;
+    }
+
     private void Start()
     {
-        // Todo
-        // 스탯 표 json으로 만들어야함
-
-        _maxHp = 100;
-        _hp = _maxHp;
-        _power = 5;
-        _speed = 5f;
-        _attackRange = 7f;
-        _sightRange = 13f;
-        _attackSpeed = 1f;
-        _maxChaseDistance = 10f;
     }
 }

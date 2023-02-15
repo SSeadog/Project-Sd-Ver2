@@ -65,9 +65,12 @@ public abstract class EnemyMonster : Monster
         return minDistanceGameObject;
     }
 
-    protected override bool CheckAttackCollisionTagname(string collider_tag)
+    protected override bool CheckTeamTagname(string collider_tag)
     {
         if (collider_tag == Define.TagName.EnemyProjectile.ToString())
+            return false;
+
+        if (collider_tag == Define.TagName.EnemyMonster.ToString())
             return false;
 
         return true;

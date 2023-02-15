@@ -10,7 +10,7 @@ public class TestScene : BaseScene
         List<string> keys = new List<string>(settingInfo.Keys);
         foreach (string key in keys)
         {
-            GameObject original = Resources.Load<GameObject>($"Prefabs/{key}");
+            GameObject original = Resources.Load<GameObject>(settingInfo[key].path);
             GameObject instance = Instantiate(original);
             instance.name = key;
             instance.transform.position = new Vector3(settingInfo[key].PosX, settingInfo[key].PosY, settingInfo[key].PosZ);

@@ -11,7 +11,11 @@ public class Define
         EnemyTower,
         Player,
         FriendlyMeleeMonster,
-        EnemyMeleeMonster
+        FriendlyRangedMonster,
+        FriendlyPowerMonster,
+        EnemyMeleeMonster,
+        EnemyRangedMonster,
+        EnemyPowerMonster,
     }
 
     public enum TagName
@@ -39,5 +43,16 @@ public class Define
         public ObjectType type;
         public float spawnTime;
         public bool isSpawned = false;
+    }
+
+    public class MonsterStat
+    {
+        public int MaxHp;
+        public int Power;
+        public float Speed;
+        public float AttackRange;
+        public float SightRange;
+        public float AttackSpeed;
+        public float MaxChaseDistance;
     }
 }

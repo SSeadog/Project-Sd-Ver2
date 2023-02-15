@@ -37,6 +37,9 @@ public class PlayerController : MonoBehaviour
 
         _arrowOriginal = Resources.Load<GameObject>("Prefabs/Weapons/PlayerArrow");
         _arrowPosition = transform.Find("ArrowPosition").gameObject;
+
+        // OnDead에 함수 넣어줘야함
+        // 결과창 띄우기?
     }
 
     void Update()
@@ -53,7 +56,7 @@ public class PlayerController : MonoBehaviour
         float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");
 
-        _moveVec = new Vector3(x, 0, y);
+        _moveVec = new Vector3(x, 0, y).normalized;
 
         transform.Translate(_moveVec * Time.deltaTime * _stat.Speed);
     }
@@ -77,12 +80,32 @@ public class PlayerController : MonoBehaviour
     }
     
     // Spawn()이 플레이어 컨트롤러 밑에 둘만 한가..? 따로 빼야하나?? 고민 필요
+    // Spawn 비용 데이터는 어떻게 관리하지..?
     void Spawn()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            GameObject instance = Managers.Game.Spawn(Define.ObjectType.FriendlyMeleeMonster, "Prefabs/Monsters/FriendlyMeleeMonster");
-            instance.transform.position = Managers.Game.friendlyTower.GetComponent<FriendlyTowerController>().GetSpawnRoot().position;
+            if (_stat.ResourcePoint < 10f)
+                return;
+
+            _stat.ResourcePoint -= 10f;
+            Managers.Game.Spawn(Define.ObjectType.FriendlyMeleeMonster, "Prefabs/Monsters/FriendlyMeleeMonster");
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            if (_stat.ResourcePoint < 15f)
+                return;
+
+            _stat.ResourcePoint -= 15f;
+            Managers.Game.Spawn(Define.ObjectType.FriendlyRangedMonster, "Prefabs/Monsters/FriendlyRangedMonster");
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            if (_stat.ResourcePoint < 25f)
+                return;
+
+            _stat.ResourcePoint -= 25f;
+            Managers.Game.Spawn(Define.ObjectType.FriendlyPowerMonster, "Prefabs/Monsters/FriendlyPowerMonster");
         }
     }
 
@@ -149,5 +172,22 @@ public class PlayerController : MonoBehaviour
     public void EndFireArrow()
     {
         _isAttack = false;
+    }
+
+    private bool CheckAttackCollisionTagname(string collder_tag)
+    {
+        if (collder_tag == Define.TagName.FriendlyProjectile.ToString())
+            return false;
+
+        return true;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!CheckAttackCollisionTagname(other.tag))
+            return;
+
+        Stat attackerStat = other.GetComponent<Stat>();
+        _stat.GetAttacked(attackerStat);
     }
 }

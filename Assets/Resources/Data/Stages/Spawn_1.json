@@ -1,0 +1,194 @@
+﻿[
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "5"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "5.5"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "6"
+  },
+  {
+    "type": "EnemyRangedMonster",
+    "SpawnTime": "6.5"
+  },
+  {
+    "type": "EnemyRangedMonster",
+    "SpawnTime": "7"
+  },
+  {
+    "type": "EnemyRangedMonster",
+    "SpawnTime": "7.5"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "35"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "35.5"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "36"
+  },
+  {
+    "type": "EnemyRangedMonster",
+    "SpawnTime": "36.5"
+  },
+  {
+    "type": "EnemyRangedMonster",
+    "SpawnTime": "37"
+  },
+  {
+    "type": "EnemyRangedMonster",
+    "SpawnTime": "37.5"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "65"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "65.5"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "66"
+  },
+  {
+    "type": "EnemyRangedMonster",
+    "SpawnTime": "66.5"
+  },
+  {
+    "type": "EnemyRangedMonster",
+    "SpawnTime": "67"
+  },
+  {
+    "type": "EnemyRangedMonster",
+    "SpawnTime": "67.5"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "95"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "95.5"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "96"
+  },
+  {
+    "type": "EnemyRangedMonster",
+    "SpawnTime": "96.5"
+  },
+  {
+    "type": "EnemyRangedMonster",
+    "SpawnTime": "97"
+  },
+  {
+    "type": "EnemyRangedMonster",
+    "SpawnTime": "97.5"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "125"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "125.5"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "126"
+  },
+  {
+    "type": "EnemyRangedMonster",
+    "SpawnTime": "126.5"
+  },
+  {
+    "type": "EnemyRangedMonster",
+    "SpawnTime": "127"
+  },
+  {
+    "type": "EnemyRangedMonster",
+    "SpawnTime": "127.5"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "125"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "125.5"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "126"
+  },
+  {
+    "type": "EnemyRangedMonster",
+    "SpawnTime": "126.5"
+  },
+  {
+    "type": "EnemyRangedMonster",
+    "SpawnTime": "127"
+  },
+  {
+    "type": "EnemyRangedMonster",
+    "SpawnTime": "127.5"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "125"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "125.5"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "126"
+  },
+  {
+    "type": "EnemyRangedMonster",
+    "SpawnTime": "126.5"
+  },
+  {
+    "type": "EnemyRangedMonster",
+    "SpawnTime": "127"
+  },
+  {
+    "type": "EnemyRangedMonster",
+    "SpawnTime": "127.5"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "125"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "125.5"
+  },
+  {
+    "type": "EnemyMeleeMonster",
+    "spawnTime": "126"
+  },
+  {
+    "type": "EnemyRangedMonster",
+    "SpawnTime": "126.5"
+  },
+  {
+    "type": "EnemyRangedMonster",
+    "SpawnTime": "127"
+  },
+  {
+    "type": "EnemyRangedMonster",
+    "SpawnTime": "127.5"
+  }
+]

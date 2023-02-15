@@ -26,6 +26,8 @@ public class HpBarWorldUI : MonoBehaviour
 
     void Update()
     {
+        transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
+
         if (_stat.MaxHp == 0f)
             return;
 

@@ -10,26 +10,26 @@ public class FriendlyMonsterTanker : FriendlyMonster
     private Transform attackPosition;
     [SerializeField]
     private float splashRange = 10f;
-    [SerializeField]
-    private GameObject hitVfx;
 
     protected override void AttckTarget()
     {
-
+        // Animation Event로 실행하여 따로 동작 필요x
     }
 
     void KnockBack()
     {
+        if (_curAnim == Anims.Dead)
+            return;
+
         Collider[] colliders = Physics.OverlapSphere(attackPosition.position, splashRange);
         Vector3 hitVfxPosition = new Vector3(attackPosition.position.x, transform.position.y, attackPosition.position.z);
-        Instantiate(hitVfx, hitVfxPosition, Quaternion.identity);
 
         foreach (Collider collider in colliders)
         {
             Rigidbody rbody = collider.GetComponent<Rigidbody>();
             if (rbody != null)
             {
-                if (rbody.tag == "PlayerMonster" || rbody.tag == "Player")
+                if (CheckTeamTagname(rbody.tag) == false)
                     continue;
 
                 rbody.AddExplosionForce(1000f, attackPosition.position, 7f);
@@ -38,6 +38,8 @@ public class FriendlyMonsterTanker : FriendlyMonster
                 rbody.GetComponent<Stat>().GetAttacked(_stat);
             }
         }
+
+        PlayAnim(Anims.Idle);
     }
 
     IEnumerator SetVelocityZero(Rigidbody rbody)

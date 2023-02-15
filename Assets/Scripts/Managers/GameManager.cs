@@ -9,6 +9,7 @@ public class GameManager
     // 인스턴스할 게임오브젝트를 로드해뒀는지 확인 후 안했을 때만 로드하도록, 이미 로드했었다면 로드해둔 거 이용하도록 개선 필요
 
     // 게임스테이지와 그 외 스테이지 구분 필요. 게임스테이지에서만 동작해야하는 부분들이 있음(playTime기록 등)
+    // -1 = 게임 외 스테이지. 1~n 스테이지 번호로 두며 게임 스테이지로 취급
     public int stageNum;
 
     public GameObject friendlyTower;
@@ -16,7 +17,6 @@ public class GameManager
 
     public List<Define.spawnItem> spawnInfo;
 
-    // 몬스터 관리는 id를 부여해서 Dict로 할지 그냥 List로 할지 고민중
     public List<GameObject> friendlyMonsters;
     public List<GameObject> enemyMonsters;
 
@@ -33,7 +33,7 @@ public class GameManager
     {
         playTime = 0f;
 
-        spawnInfo = Util.LoadJsonList<List<Define.spawnItem>>("GameSettings/Stages/Spawn_1");
+        spawnInfo = Util.LoadJsonList<List<Define.spawnItem>>("Data/Stages/Spawn_1");
 
         friendlyMonsters = new List<GameObject>();
         enemyMonsters= new List<GameObject>();
@@ -63,6 +63,20 @@ public class GameManager
         playTime += time;
     }
 
+    public void UpdatePlayerRp(float time)
+    {
+        PlayerStat playerStat = player.GetComponent<PlayerStat>();
+        if (playerStat.ResourcePoint + time * 10f < playerStat.MaxResourcePoint)
+        {
+            player.GetComponent<PlayerStat>().ResourcePoint += time * 10f;
+        }
+        else
+        {
+            player.GetComponent<PlayerStat>().ResourcePoint = playerStat.MaxResourcePoint;
+        }
+    }
+
+
     public GameObject Spawn(Define.ObjectType objectType, string path, Transform parent = null)
     {
         GameObject original = Resources.Load<GameObject>(path);
@@ -71,10 +85,20 @@ public class GameManager
         switch (objectType)
         {
             case Define.ObjectType.FriendlyMeleeMonster:
+            case Define.ObjectType.FriendlyRangedMonster:
+            case Define.ObjectType.FriendlyPowerMonster:
+                instance.transform.position = friendlyTower.GetComponent<TowerBase>().GetSpawnRoot().position;
+                instance.GetComponent<MonsterStat>().Init(Managers.Data.monsterStats[objectType.ToString()]);
                 Managers.Game.friendlyMonsters.Add(instance);
+                spawnedFriendlyMonsterCount++;
                 break;
             case Define.ObjectType.EnemyMeleeMonster:
+            case Define.ObjectType.EnemyRangedMonster:
+            case Define.ObjectType.EnemyPowerMonster:
+                instance.transform.position = enemyTower.GetComponent<TowerBase>().GetSpawnRoot().position;
+                instance.GetComponent<MonsterStat>().Init(Managers.Data.monsterStats[objectType.ToString()]);
                 Managers.Game.enemyMonsters.Add(instance);
+                spawnedEnemyMonsterCount++;
                 break;
         }
 

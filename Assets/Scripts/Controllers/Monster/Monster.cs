@@ -79,16 +79,25 @@ public abstract class Monster : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(_navMeshAgent.speed);
-        if (_currentMonsterState != MonsterState.Dead)
-        {
-            //  AI 실행 주기
-            _brainTimer += Time.deltaTime;
-            if (_brainTimer >= _brainSpeed)
-            {
-                AILogic();
+        if (_currentMonsterState == MonsterState.Dead)
+            return;
 
-                _brainTimer = 0;
+        //  AI 실행 주기
+        _brainTimer += Time.deltaTime;
+        if (_brainTimer >= _brainSpeed)
+        {
+            AILogic();
+
+            _brainTimer = 0;
+        }
+
+        if (_isAttackReady == false)
+        {
+            _currentAttackTime += _brainTimer;
+            if (_currentAttackTime >= _stat.AttackSpeed)
+            {
+                _isAttackReady = true;
+                _currentAttackTime = 0f;
             }
         }
     }
@@ -221,17 +230,6 @@ public abstract class Monster : MonoBehaviour
                         AttckTarget();
                         _isAttackReady = false;
                     }
-                    // 공격 준비가 안됐으면 attackSpeed까지 대기
-                    else
-                    {
-                        _currentAttackTime += _brainTimer;
-                        if (_currentAttackTime >= _stat.AttackSpeed)
-                        {
-                            _isAttackReady = true;
-                            _currentAttackTime = 0f;
-                        }
-                    }
-
                 }
                 // 공격 대상이 시야 밖에 있다면
                 else
@@ -268,8 +266,7 @@ public abstract class Monster : MonoBehaviour
     void FaceTarget()
     {
         Vector3 direction = (_attackTarget.transform.position - transform.position).normalized;
-        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+        transform.rotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
     }
 
     protected abstract void AttckTarget();
@@ -302,6 +299,7 @@ public abstract class Monster : MonoBehaviour
 
     IEnumerator CoStiff(float time)
     {
+        MonsterState beforeState = _currentMonsterState;
         _currentMonsterState = MonsterState.Stiffing;
         _navMeshAgent.speed = 0f;
         _navMeshAgent.velocity = Vector3.zero;
@@ -309,14 +307,14 @@ public abstract class Monster : MonoBehaviour
         
         yield return new WaitForSeconds(time);
 
-        _currentMonsterState = MonsterState.Idle;
+        _currentMonsterState = beforeState;
         _navMeshAgent.speed = _stat.Speed;
         _anim.speed = 1f;
     }
 
     IEnumerator CoChangeColor(float time)
     {
-        MeshRenderer[] mrs = gameObject.GetComponentsInChildren<MeshRenderer>();
+        SkinnedMeshRenderer[] mrs = gameObject.GetComponentsInChildren<SkinnedMeshRenderer>();
 
         List<List<Color>> colors = new List<List<Color>>();
 
@@ -355,14 +353,14 @@ public abstract class Monster : MonoBehaviour
         _navMeshAgent.isStopped = true;
     }
 
-    protected virtual bool CheckAttackCollisionTagname(string collder_tag)
+    protected virtual bool CheckTeamTagname(string collder_tag)
     {
         return false;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!CheckAttackCollisionTagname(other.tag))
+        if (!CheckTeamTagname(other.tag))
             return;
 
         Stat attackerStat = other.GetComponent<Stat>();

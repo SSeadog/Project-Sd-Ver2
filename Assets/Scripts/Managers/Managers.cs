@@ -48,7 +48,11 @@ public class Managers : MonoBehaviour
 
     void Update()
     {
-        _instance._game.UpdatePlayTime(Time.deltaTime);
+        if (_instance._game.stageNum != -1)
+        {
+            _instance._game.UpdatePlayTime(Time.deltaTime);
+            _instance._game.UpdatePlayerRp(Time.deltaTime);
+        }
     }
 
     public static void Clear()

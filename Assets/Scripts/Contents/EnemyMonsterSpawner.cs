@@ -8,9 +8,14 @@ public class EnemyMonsterSpawner : MonoBehaviour
 {
     void Start()
     {
-        GameObject instance = Managers.Game.Spawn(Define.ObjectType.EnemyMeleeMonster, "Prefabs/Monsters/EnemyRangedMonster");
-        instance.transform.position = Managers.Game.enemyTower.GetComponent<EnemyTowerController>().GetSpawnRoot().position;
-        Managers.Game.spawnedEnemyMonsterCount++;
+        Invoke("SpawnTest", 1f);
+    }
+
+    void SpawnTest()
+    {
+        //Managers.Game.Spawn(Define.ObjectType.EnemyMeleeMonster, "Prefabs/Monsters/EnemyMeleeMonster");
+        //Managers.Game.Spawn(Define.ObjectType.EnemyRangedMonster, "Prefabs/Monsters/EnemyRangedMonster");
+        Managers.Game.Spawn(Define.ObjectType.EnemyPowerMonster, "Prefabs/Monsters/EnemyPowerMonster");
     }
 
     void Update()
@@ -20,11 +25,9 @@ public class EnemyMonsterSpawner : MonoBehaviour
         //    if (Managers.Game.spawnInfo[i].spawnTime < Managers.Game.playTime && !Managers.Game.spawnInfo[i].isSpawned)
         //    {
         //        if (Managers.Game.spawnInfo[i].type == Define.ObjectType.EnemyMeleeMonster)
-        //        {
-        //            GameObject instance = Managers.Game.Spawn(Define.ObjectType.EnemyMeleeMonster, "Prefabs/Monsters/EnemyMeleeMonster");
-        //            instance.transform.position = Managers.Game.enemyTower.GetComponent<EnemyTowerController>().GetSpawnRoot().position;
-        //            Managers.Game.spawnedEnemyMonsterCount++;
-        //        }
+        //            Managers.Game.Spawn(Define.ObjectType.EnemyMeleeMonster, "Prefabs/Monsters/EnemyMeleeMonster");
+        //        else if (Managers.Game.spawnInfo[i].type == Define.ObjectType.EnemyRangedMonster)
+        //            Managers.Game.Spawn(Define.ObjectType.EnemyRangedMonster, "Prefabs/Monsters/EnemyRangedMonster");
 
         //        Managers.Game.spawnInfo[i].isSpawned = true;
         //    }

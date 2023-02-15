@@ -8,14 +8,14 @@ public class PlayerStat : Stat
     float _resourcePoint;
 
     public float MaxResourcePoint { get { return _maxResourcePoint; } }
-    public float ResourcePoint { get { return _resourcePoint;} }
+    public float ResourcePoint { get { return _resourcePoint; } set { _resourcePoint = value; } }
 
     void Start()
     {
         _maxHp = 100;
         _hp = _maxHp;
         _maxResourcePoint = 100f;
-        _resourcePoint = _maxResourcePoint;
+        _resourcePoint = 30f;
         _power = 30;
         _speed = 10f;
     }

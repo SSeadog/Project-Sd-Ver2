@@ -54,9 +54,15 @@ public abstract class FriendlyMonster : Monster
         return minDistanceGameObject;
     }
 
-    protected override bool CheckAttackCollisionTagname(string collder_tag)
+    protected override bool CheckTeamTagname(string collder_tag)
     {
+        if (collder_tag == Define.TagName.Player.ToString())
+            return false;
+
         if (collder_tag == Define.TagName.FriendlyProjectile.ToString())
+            return false;
+
+        if (collder_tag == Define.TagName.FriendlyMonster.ToString())
             return false;
 
         return true;

@@ -13,18 +13,21 @@ public class EnemyMonsterTanker : EnemyMonster
 
     protected override void AttckTarget()
     {
-
+        // Animation Event로 실행하여 따로 동작 필요x
     }
 
     void KnockBack()
     {
+        if (_curAnim == Anims.Dead)
+            return;
+
         Collider[] colliders = Physics.OverlapSphere(attackPosition.position, splashRange);
         foreach (Collider collider in colliders)
         {
             Rigidbody rbody = collider.GetComponent<Rigidbody>();
             if (rbody != null)
             {
-                if (rbody.tag == "EnemyMonster")
+                if (CheckTeamTagname(rbody.tag) == false)
                     continue;
 
                 rbody.AddExplosionForce(1000f, attackPosition.position, 7f);
@@ -33,6 +36,8 @@ public class EnemyMonsterTanker : EnemyMonster
                 rbody.GetComponent<Stat>().GetAttacked(_stat);
             }
         }
+
+        PlayAnim(Anims.Idle);
     }
 
     IEnumerator SetVelocityZero(Rigidbody rbody)

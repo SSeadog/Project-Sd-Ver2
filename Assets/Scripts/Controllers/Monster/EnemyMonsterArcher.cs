@@ -16,6 +16,9 @@ public class EnemyMonsterArcher : EnemyMonster
 
     public void FireArrow()
     {
+        if (_attackTarget== null)
+            return;
+
         // 활 쏘기
         GameObject instanceArrow = Instantiate(arrow, arrowPosition.position, transform.rotation * Quaternion.Euler(90f, 0, 0));
         Rigidbody arrowRigid = instanceArrow.GetComponent<Rigidbody>();

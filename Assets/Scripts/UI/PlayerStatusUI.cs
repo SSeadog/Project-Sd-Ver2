@@ -39,10 +39,16 @@ public class PlayerStatusUI : MonoBehaviour
 
         PlayerStat player = Managers.Game.player.GetComponent<PlayerStat>();
         
-        if (player.MaxHp == 0)
-            return;
+        if (player.MaxHp != 0)
+        {
+            float percent = (float)player.Hp / player.MaxHp;
+            SetHpBar(percent);
+        }
 
-        float percent = (float)player.Hp / player.MaxHp;
-        SetHpBar(percent);
+        if (player.MaxResourcePoint != 0)
+        {
+            float percent = (float)player.ResourcePoint / player.MaxResourcePoint;
+            SetRpBar(percent);
+        }
     }
 }
