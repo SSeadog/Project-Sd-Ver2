@@ -10,4 +10,9 @@ public class EnemyTowerController : TowerBase
 
         Managers.Game.enemyTower = gameObject;
     }
+
+    public override void OnDead()
+    {
+        Managers.Game.GameWin();
+    }
 }

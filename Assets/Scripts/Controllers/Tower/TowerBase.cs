@@ -5,13 +5,13 @@ using UnityEngine;
 public class TowerBase : MonoBehaviour
 {
     [SerializeField] protected Define.ObjectType _type;
-    // 스탯 -> Stat스크립트 따로 분리
-    TowerStat _stat;
+
+    protected TowerStat _stat;
     // 스폰 루트
     Transform _spawnRoot;
     // waypoints
-    Transform _oppsiteTowerTransform;
-    float _moveDeg = 0f;
+    protected Transform _oppositeTowerTransform;
+    protected float _moveDeg = 0f;
     float _degGap = 80f;
     
     List<Transform> _lstWaypoint = new List<Transform>();
@@ -20,6 +20,8 @@ public class TowerBase : MonoBehaviour
     public virtual void Init()
     {
         _spawnRoot = transform.Find("spawnRoot");
+        _stat = GetComponent<TowerStat>();
+        _stat.OnDeadAction += OnDead;
     }
 
     void Start()
@@ -28,18 +30,28 @@ public class TowerBase : MonoBehaviour
 
         if (_type == Define.ObjectType.FriendlyTower)
         {
-            _oppsiteTowerTransform = Managers.Game.enemyTower.transform;
+            _oppositeTowerTransform = Managers.Game.enemyTower.transform;
             _moveDeg = 180f;
         }
         else if (_type == Define.ObjectType.EnemyTower)
         {
-            _oppsiteTowerTransform = Managers.Game.friendlyTower.transform;
+            _oppositeTowerTransform = Managers.Game.friendlyTower.transform;
             _moveDeg = 0f;
         }
 
+        LoadWayPoints();
         SetWaypoints();
 
         StartCoroutine(CoWaypointsCheck());
+    }
+
+    // 좌표로 데이터화해서 로드하는 방식으로 변경하는 게 좋을 듯
+    void LoadWayPoints()
+    {
+        string path = "Prefabs/WayPoints/GameScene" + Managers.Game.stageNum + "/" + _type.ToString() + "WayPoints";
+        GameObject waypoints = Resources.Load<GameObject>(path);
+        GameObject instance = Instantiate(waypoints, transform);
+        instance.name = "Waypoints";
     }
 
     // waypoints를 위치에 맞게 적절한 순서로 정리하는 함수(내용에 맞게 이름 변경 필요)
@@ -50,16 +62,16 @@ public class TowerBase : MonoBehaviour
         // 2-1. 거리가 가장 짧으면서 이동방향에 맞는지를 체크. 이동방향 같은 경우 각도를 통해 판단
         // * 적절하게 waypoint를 배치하지 않으면 모든 waypoint를 이용하지 않을 수도 있음
 
-        Transform[] waypoints = transform.Find("waypoints").GetComponentsInChildren<Transform>();
+        Transform[] waypoints = transform.Find("Waypoints").GetComponentsInChildren<Transform>();
 
         Queue<Transform> queue = new Queue<Transform>();
-        Transform startPoint = _oppsiteTowerTransform;
+        Transform startPoint = _oppositeTowerTransform;
         {
             float minDist = 99999f;
             Transform minDistPoint = null;
             for (int i = 0; i < waypoints.Length; i++)
             {
-                if (waypoints[i].name == "waypoints")
+                if (waypoints[i].name == "Waypoints")
                     continue;
 
                 float dist = Vector3.Distance(startPoint.position, waypoints[i].position);
@@ -86,7 +98,7 @@ public class TowerBase : MonoBehaviour
 
             for (int i = 0; i < waypoints.Length; i++)
             {
-                if (waypoints[i].name == "waypoints")
+                if (waypoints[i].name == "Waypoints")
                     continue;
 
                 if (waypoints[i].position == basePoint.position)
@@ -141,13 +153,18 @@ public class TowerBase : MonoBehaviour
         }
     }
 
-    void Update()
+    private void OnTriggerEnter(Collider other)
     {
-        
+        Stat attackerStat = other.GetComponent<Stat>();
+        _stat.GetAttacked(attackerStat);
     }
 
     public Transform GetSpawnRoot()
     {
         return _spawnRoot;
+    }
+
+    public virtual void OnDead()
+    {
     }
 }

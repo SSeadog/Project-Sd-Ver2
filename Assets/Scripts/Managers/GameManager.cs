@@ -31,9 +31,8 @@ public class GameManager
 
     public void Init()
     {
+        Application.targetFrameRate = 60;
         playTime = 0f;
-
-        spawnInfo = Util.LoadJsonList<List<Define.spawnItem>>("Data/Stages/Spawn_1");
 
         friendlyMonsters = new List<GameObject>();
         enemyMonsters= new List<GameObject>();
@@ -60,6 +59,9 @@ public class GameManager
 
     public void UpdatePlayerRp(float time)
     {
+        if (player == null)
+            return;
+
         PlayerStat playerStat = player.GetComponent<PlayerStat>();
         if (playerStat.ResourcePoint + time * 10f < playerStat.MaxResourcePoint)
         {
@@ -83,7 +85,7 @@ public class GameManager
             case Define.ObjectType.FriendlyRangedMonster:
             case Define.ObjectType.FriendlyPowerMonster:
                 instance.transform.position = friendlyTower.GetComponent<TowerBase>().GetSpawnRoot().position;
-                instance.GetComponent<MonsterStat>().Init(Managers.Data.monsterStats[objectType.ToString()]);
+                instance.GetComponent<MonsterStat>().Init(objectType, Managers.Data.monsterStats[objectType.ToString()]);
                 Managers.Game.friendlyMonsters.Add(instance);
                 spawnedFriendlyMonsterCount++;
                 break;
@@ -91,7 +93,7 @@ public class GameManager
             case Define.ObjectType.EnemyRangedMonster:
             case Define.ObjectType.EnemyPowerMonster:
                 instance.transform.position = enemyTower.GetComponent<TowerBase>().GetSpawnRoot().position;
-                instance.GetComponent<MonsterStat>().Init(Managers.Data.monsterStats[objectType.ToString()]);
+                instance.GetComponent<MonsterStat>().Init(objectType, Managers.Data.monsterStats[objectType.ToString()]);
                 Managers.Game.enemyMonsters.Add(instance);
                 spawnedEnemyMonsterCount++;
                 break;
@@ -162,7 +164,7 @@ public class GameManager
         Time.timeScale = 0f;
         SetActiveCursor(true);
         UIController uc = GameObject.FindObjectOfType<UIController>();
-        uc._gameEndingUI.ShowLoseUI();
+        uc._gameEndingUI.ShowWinUI();
     }
 
     public void Clear()
@@ -183,5 +185,7 @@ public class GameManager
         spawnedEnemyMonsterCount = 0;
         killedFriendlyMonsterCount = 0;
         killedEnemyMonsterCount = 0;
+
+        spawnInfo = null;
     }
 }

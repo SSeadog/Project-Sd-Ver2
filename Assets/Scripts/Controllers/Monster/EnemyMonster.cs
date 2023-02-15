@@ -80,6 +80,7 @@ public abstract class EnemyMonster : Monster
     {
         base.OnDead();
 
+        Managers.Game.killedEnemyMonsterCount++;
         Managers.Game.Despawn(Define.ObjectType.EnemyMeleeMonster, gameObject);
     }
 }

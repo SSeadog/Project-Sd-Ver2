@@ -67,7 +67,7 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.8320241
+      - time: 0.8359788
         functionName: EndFireArrow
         data: 
         objectReferenceParameter: {instanceID: 0}

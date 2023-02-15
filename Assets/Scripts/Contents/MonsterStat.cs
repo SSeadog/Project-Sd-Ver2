@@ -14,8 +14,9 @@ public class MonsterStat : Stat
     public float AttackSpeed { get { return _attackSpeed; } set { _attackSpeed = value; } }
     public float MaxChaseDistance { get { return _maxChaseDistance; } set { _maxChaseDistance = value; } }
 
-    public void Init(Define.MonsterStat stat)
+    public void Init(Define.ObjectType type, Define.MonsterStat stat)
     {
+        _type = type;
         _maxHp = stat.MaxHp;
         _hp = _maxHp;
         _power = stat.Power;

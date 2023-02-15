@@ -29,6 +29,4 @@ public class TowerStat : Stat
 
         return true;
     }
-
-    // ResourcePoint 생산은 어디서?
 }

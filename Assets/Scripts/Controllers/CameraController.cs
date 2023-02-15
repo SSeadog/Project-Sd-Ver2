@@ -37,10 +37,10 @@ public class CameraController : MonoBehaviour
         //if (rot.x > 80f && rot.x < )
         //    rot.x = 80f;
 
-        if (rot.x < 280f && rot.x > 270f)
+        if (rot.x < 280f && rot.x > 190f)
             rot.x = 280f;
 
-        if (rot.x > 80f && rot.x < 90f)
+        if (rot.x > 80f && rot.x < 170f)
             rot.x = 80f;
 
         transform.eulerAngles = rot;

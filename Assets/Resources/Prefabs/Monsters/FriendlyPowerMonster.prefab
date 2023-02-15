@@ -9,12 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8511836320570537504}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: foot.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &8511836320570537504
 Transform:
@@ -44,12 +44,12 @@ GameObject:
   - component: {fileID: 8511836320570537506}
   - component: {fileID: 8511836320571307522}
   - component: {fileID: 8511836320572306626}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Eyes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &8511836320570537506
 Transform:
@@ -125,12 +125,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8511836320570537508}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: forearm.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &8511836320570537508
 Transform:
@@ -157,12 +157,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8511836320570537510}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: foot.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &8511836320570537510
 Transform:
@@ -190,12 +190,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8511836320570537512}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: hand.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &8511836320570537512
 Transform:
@@ -222,12 +222,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8511836320570537514}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: forearm.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &8511836320570537514
 Transform:
@@ -254,12 +254,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8511836320570537516}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: hand.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &8511836320570537516
 Transform:
@@ -286,12 +286,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8511836320570537518}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: hand.L_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &8511836320570537518
 Transform:
@@ -317,12 +317,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8511836320570537520}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: heel.02.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &8511836320570537520
 Transform:
@@ -349,12 +349,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8511836320570537522}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: hand.R_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &8511836320570537522
 Transform:
@@ -380,12 +380,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8511836320570537524}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: heel.02.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &8511836320570537524
 Transform:
@@ -412,12 +412,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8511836320570537526}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: heel.02.L_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &8511836320570537526
 Transform:
@@ -444,12 +444,12 @@ GameObject:
   m_Component:
   - component: {fileID: 8511836320570537528}
   - component: {fileID: 8511836320556443394}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Monster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &8511836320570537528
 Transform:
@@ -553,12 +553,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8511836320570537530}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: heel.02.R_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &8511836320570537530
 Transform:
@@ -584,12 +584,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8511836320570537532}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Monster_rig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &8511836320570537532
 Transform:
@@ -622,12 +622,12 @@ GameObject:
   - component: {fileID: 8511836320560650689}
   - component: {fileID: 8511836320560650695}
   - component: {fileID: -550101850181746257}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FriendlyPowerMonster
   m_TagString: FriendlyMonster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &8511836320570537534
 Transform:
@@ -733,6 +733,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4692363f500e356408be36522ad2969f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _type: 0
   _maxHp: 0
   _hp: 0
   _power: 0
@@ -766,12 +767,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8511836320570537568}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: toe.R_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &8511836320570537568
 Transform:
@@ -797,12 +798,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8511836320570537570}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: toe.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &8511836320570537570
 Transform:
@@ -829,12 +830,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8511836320570537572}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: upper_arm.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &8511836320570537572
 Transform:
@@ -861,12 +862,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8511836320570537574}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: upper_arm.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &8511836320570537574
 Transform:
@@ -893,12 +894,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8511836320570537472}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: shin.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &8511836320570537472
 Transform:
@@ -925,12 +926,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8511836320570537474}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: shin.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &8511836320570537474
 Transform:
@@ -957,12 +958,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8511836320570537476}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: shoulder.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &8511836320570537476
 Transform:
@@ -989,12 +990,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8511836320570537478}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: shoulder.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &8511836320570537478
 Transform:
@@ -1021,12 +1022,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8511836320570537480}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: spine.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &8511836320570537480
 Transform:
@@ -1053,12 +1054,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8511836320570537482}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: spine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &8511836320570537482
 Transform:
@@ -1087,12 +1088,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8511836320570537484}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: spine.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &8511836320570537484
 Transform:
@@ -1121,12 +1122,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8511836320570537486}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: spine.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &8511836320570537486
 Transform:
@@ -1153,12 +1154,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8511836320570537488}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: spine.005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &8511836320570537488
 Transform:
@@ -1185,12 +1186,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8511836320570537490}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: spine.004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &8511836320570537490
 Transform:
@@ -1217,12 +1218,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8511836320570537492}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: spine.006_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &8511836320570537492
 Transform:
@@ -1249,12 +1250,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8511836320570537494}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: spine.006
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &8511836320570537494
 Transform:
@@ -1281,12 +1282,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8511836320570537496}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: thigh.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &8511836320570537496
 Transform:
@@ -1313,12 +1314,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8511836320570537498}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: thigh.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &8511836320570537498
 Transform:
@@ -1345,12 +1346,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8511836320570537500}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: toe.L_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &8511836320570537500
 Transform:
@@ -1376,12 +1377,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8511836320570537502}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: toe.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &8511836320570537502
 Transform:
@@ -1408,12 +1409,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8511836320688604935}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: AttackPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &8511836320688604935
 Transform:
@@ -1437,9 +1438,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8511836320570537534}
     m_Modifications:
+    - target: {fileID: 4052185972784336633, guid: 358c9d9312d14314db55f9f025534b9f, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4052185972784336635, guid: 358c9d9312d14314db55f9f025534b9f, type: 3}
       propertyPath: m_Name
       value: MiniMapIcon
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052185972784336635, guid: 358c9d9312d14314db55f9f025534b9f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052185972784336635, guid: 358c9d9312d14314db55f9f025534b9f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4052185972784336639, guid: 358c9d9312d14314db55f9f025534b9f, type: 3}
       propertyPath: m_Pivot.x
@@ -1525,6 +1538,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4052185973175342582, guid: 358c9d9312d14314db55f9f025534b9f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052185973175342582, guid: 358c9d9312d14314db55f9f025534b9f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 358c9d9312d14314db55f9f025534b9f, type: 3}
 --- !u!224 &7680999022262168291 stripped
@@ -1539,6 +1560,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8511836320570537534}
     m_Modifications:
+    - target: {fileID: 1826369449099489137, guid: d57ad58025f22bc48adec411a64da495, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1826369449099489137, guid: d57ad58025f22bc48adec411a64da495, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2364823988902217551, guid: d57ad58025f22bc48adec411a64da495, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2364823988902217551, guid: d57ad58025f22bc48adec411a64da495, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2999830122706472356, guid: d57ad58025f22bc48adec411a64da495, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2999830122706472356, guid: d57ad58025f22bc48adec411a64da495, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 3144703956812886187, guid: d57ad58025f22bc48adec411a64da495, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1626,6 +1671,14 @@ PrefabInstance:
     - target: {fileID: 3625527507699828246, guid: d57ad58025f22bc48adec411a64da495, type: 3}
       propertyPath: m_Name
       value: HpBarWorldUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3625527507699828246, guid: d57ad58025f22bc48adec411a64da495, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3625527507699828246, guid: d57ad58025f22bc48adec411a64da495, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d57ad58025f22bc48adec411a64da495, type: 3}

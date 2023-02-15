@@ -72,6 +72,7 @@ public abstract class FriendlyMonster : Monster
     {
         base.OnDead();
 
+        Managers.Game.killedFriendlyMonsterCount++;
         Managers.Game.Despawn(Define.ObjectType.FriendlyMeleeMonster, gameObject);
     }
 }

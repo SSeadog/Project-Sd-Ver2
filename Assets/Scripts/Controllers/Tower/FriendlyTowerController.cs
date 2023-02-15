@@ -10,4 +10,9 @@ public class FriendlyTowerController : TowerBase
 
         Managers.Game.friendlyTower = gameObject;
     }
+
+    public override void OnDead()
+    {
+        Managers.Game.GameLose();
+    }
 }

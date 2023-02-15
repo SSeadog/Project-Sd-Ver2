@@ -1416,6 +1416,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5d600b3ccfc84643b6932ab51058bbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _type: 0
   _maxHp: 0
   _hp: 0
   _power: 0
@@ -7241,6 +7242,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8798871826703571465}
     m_Modifications:
+    - target: {fileID: 4052185972784336633, guid: 358c9d9312d14314db55f9f025534b9f, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4052185972784336635, guid: 358c9d9312d14314db55f9f025534b9f, type: 3}
       propertyPath: m_Name
       value: MiniMapIcon

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 public class PlayerController : MonoBehaviour
 {
@@ -76,6 +75,8 @@ public class PlayerController : MonoBehaviour
             _isAttack = true;
             _anim.CrossFade("Attack", 0.2f);
             _curAnim = Anims.Attack;
+
+            Invoke("EndFireArrow", 1f); // Animation Event로도 실행하고 애니메이션이 블랜드되어 끝까지 실행 못할 것도 대비하여 Invoke도 넣어줌
         }
     }
     

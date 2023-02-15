@@ -15,21 +15,7 @@ public class PlayTimeUI : MonoBehaviour
 
     void SetTime(float time)
     {
-        string timeString = ZeroFill(Math.Round(time / 60).ToString()) + ":" + ZeroFill(Math.Round(time % 60).ToString());
-
-        _timeText.text = timeString;
-    }
-
-    string ZeroFill(string s)
-    {
-        if (s.Length == 1)
-        {
-            return "0" + s;
-        }
-        else
-        {
-            return s;
-        }
+        _timeText.text = Util.ConvertTime(time);
     }
 
     void Update()

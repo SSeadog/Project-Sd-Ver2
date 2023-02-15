@@ -20,14 +20,13 @@ public class StageIcon : MonoBehaviour
         _stageNumText.text = _stageNum.ToString();
     }
 
-    public void SetStageNumText(int stageNum)
+    public void SetStageNum(int stageNum)
     {
         _stageNum = stageNum;
     }
 
     public void OnStageIconClicked()
     {
-        Managers.Game.stageNum = _stageNum;
-        Managers.Scene.LoadScene("GameScene");
+        Managers.Scene.LoadScene($"GameScene{_stageNum}", _stageNum);
     }
 }

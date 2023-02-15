@@ -5,6 +5,8 @@ using UnityEngine.Events;
 
 public abstract class Stat : MonoBehaviour
 {
+    public Define.ObjectType _type;
+
     [SerializeField] protected int _maxHp;
     [SerializeField] protected int _hp;
     [SerializeField] protected int _power;
@@ -20,15 +22,15 @@ public abstract class Stat : MonoBehaviour
     public UnityAction<float> OnAttacktedAction;
     public UnityAction OnDeadAction;
 
-    void Start()
+    public void Init(Define.ObjectType type)
     {
-        
+        _type = type;
     }
 
     public void GetAttacked(Stat attacker)
     {
         int damage = attacker.Power;
-        float stiffTime = damage > 20 ? 0.2f : 0f;
+        float stiffTime = damage >= 20 ? 0.2f : 0f;
         
         Hp -= damage;
 

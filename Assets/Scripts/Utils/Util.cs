@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -6,6 +7,7 @@ using UnityEngine;
 
 public static class Util
 {
+    #region ReadJson
     public static T LoadJson<T>(string path)
     {
         TextAsset textAsset = Resources.Load<TextAsset>(path);
@@ -22,5 +24,25 @@ public static class Util
     {
         TextAsset textAsset = Resources.Load<TextAsset>(path);
         return JsonConvert.DeserializeObject<Dictionary<string, T>>(textAsset.text);
+    }
+    #endregion
+
+    #region TimeFormat
+    public static string ConvertTime(float time)
+    {
+        return ZeroFill(Math.Floor(time / 60).ToString()) + ":" + ZeroFill(Math.Floor(time % 60).ToString());
+    }
+    #endregion
+
+    public static string ZeroFill(string s)
+    {
+        if (s.Length == 1)
+        {
+            return "0" + s;
+        }
+        else
+        {
+            return s;
+        }
     }
 }

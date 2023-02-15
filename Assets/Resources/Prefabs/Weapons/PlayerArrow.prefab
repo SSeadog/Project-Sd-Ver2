@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6021207178919824251}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Arrowhead_place
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 6061595562957619985}
   - component: {fileID: 7413925278775489373}
   - component: {fileID: 7666864664421553595}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlayerArrow
   m_TagString: FriendlyProjectile
   m_Icon: {fileID: 0}
@@ -220,9 +220,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41b275b5f141a3e46965eba09ad43428, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _type: 0
   _maxHp: 0
   _hp: 0
-  _power: 30
+  _power: 20
   _speed: 0
   _size: 0
   _baseStat: {fileID: 0}
@@ -250,7 +251,7 @@ GameObject:
   - component: {fileID: 2691373928321310283}
   - component: {fileID: 2479285915816100265}
   - component: {fileID: 8942519833640246054}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Arrow_stick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -333,7 +334,7 @@ GameObject:
   - component: {fileID: 2710444227846925414}
   - component: {fileID: 4406647722902712091}
   - component: {fileID: 7151905544864685537}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: arrowhead
   m_TagString: Untagged
   m_Icon: {fileID: 0}

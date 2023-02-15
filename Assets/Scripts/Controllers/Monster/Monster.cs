@@ -15,6 +15,8 @@ public abstract class Monster : MonoBehaviour
     protected List<Transform> _waypoints;
     protected int _currentWayPointIndex;
     float _brainTimer;
+    protected float _moveDeg = 0f;
+    float _degGap = 30f;
 
     // Attack
     bool _isAttackReady = true;
@@ -75,6 +77,20 @@ public abstract class Monster : MonoBehaviour
         _navMeshAgent.speed = _stat.Speed;
 
         _currentWayPointIndex = 0;
+
+        switch(_stat._type)
+        {
+            case Define.ObjectType.FriendlyMeleeMonster:
+            case Define.ObjectType.FriendlyRangedMonster:
+            case Define.ObjectType.FriendlyPowerMonster:
+                _moveDeg = 0f;
+                break;
+            case Define.ObjectType.EnemyMeleeMonster:
+            case Define.ObjectType.EnemyRangedMonster:
+            case Define.ObjectType.EnemyPowerMonster:
+                _moveDeg = 180;
+                break;
+        }
     }
 
     void Update()
@@ -150,8 +166,8 @@ public abstract class Monster : MonoBehaviour
                 // 다음 웨이포인트로 이동
                 if (_currentWayPointIndex < _waypoints.Count - 1)
                 {
-                    _currentWayPointIndex += 1;
-                    _navMeshAgent.SetDestination(_waypoints[_currentWayPointIndex].position);
+                    Transform nextWaypoint = FindNextWayPoint();
+                    _navMeshAgent.SetDestination(nextWaypoint.position);
                     _currentMonsterState = MonsterState.Walking;
                 }
                 // 끝까지 갔다면 무조건 타워로 이동
@@ -252,6 +268,58 @@ public abstract class Monster : MonoBehaviour
             case MonsterState.Stiffing:
                 break;
         }
+    }
+
+    Transform FindNextWayPoint()
+    {
+        // 현재 - 3 ~ 현재 + 3 사이 중 지금 위치에서 가장 가깝고 적절한 웨이포인트 찾기(못 찾으면? 그냥 현재 + 3 주기)
+        float minDist = 99999f;
+        int mindDistWaypointIndex = -1;
+
+        int minIndex = Mathf.Max(0, _currentWayPointIndex - 3);
+        int maxIndex = Mathf.Min(_waypoints.Count - 1, _currentWayPointIndex + 3);
+        for (int i = minIndex; i < maxIndex; i++)
+        {
+            if (i == _currentWayPointIndex)
+                continue;
+
+            float dist = Vector3.Distance(transform.position, _waypoints[i].position);
+            if (dist < minDist)
+            {
+                // 각도로 한번 더 체크
+                Vector3 moveVec = (_waypoints[i].position - transform.position).normalized;
+                float moveDeg = Mathf.Atan2(moveVec.x, moveVec.z) * Mathf.Rad2Deg;
+                if (moveDeg < 0f)
+                    moveDeg += 360f;
+
+                float minDeg = (_moveDeg - _degGap < 0f) ? _moveDeg - _degGap + 360f : _moveDeg - _degGap;
+                float maxDeg = _moveDeg + _degGap;
+
+                if (minDeg > maxDeg)
+                {
+                    if ((moveDeg > minDeg && moveDeg < 360f) || (moveDeg > 0f && moveDeg < maxDeg))
+                    {
+                        minDist = dist;
+                        mindDistWaypointIndex = i;
+                    }
+                }
+                else
+                {
+                    if ((moveDeg > minDeg) && (moveDeg < maxDeg))
+                    {
+                        minDist = dist;
+                        mindDistWaypointIndex = i;
+                    }
+                }
+            }
+        }
+
+        if (mindDistWaypointIndex != -1)
+            _currentWayPointIndex = mindDistWaypointIndex;
+        else
+            _currentWayPointIndex++;
+
+        return _waypoints[_currentWayPointIndex];
     }
 
     protected void PlayAnim(Anims animation)
