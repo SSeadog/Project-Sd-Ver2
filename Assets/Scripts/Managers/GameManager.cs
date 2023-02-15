@@ -53,11 +53,6 @@ public class GameManager
         }
     }
 
-    public void SetDeActiveCursor()
-    {
-        
-    }
-
     public void UpdatePlayTime(float time)
     {
         playTime += time;
@@ -152,6 +147,22 @@ public class GameManager
         {
             Managers.Game.spawnInfo[i].isSpawned = false;
         }
+    }
+
+    public void GameLose()
+    {
+        Time.timeScale = 0f;
+        SetActiveCursor(true);
+        UIController uc = GameObject.FindObjectOfType<UIController>();
+        uc._gameEndingUI.ShowLoseUI();
+    }
+
+    public void GameWin()
+    {
+        Time.timeScale = 0f;
+        SetActiveCursor(true);
+        UIController uc = GameObject.FindObjectOfType<UIController>();
+        uc._gameEndingUI.ShowLoseUI();
     }
 
     public void Clear()

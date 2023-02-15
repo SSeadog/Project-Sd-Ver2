@@ -20,8 +20,8 @@ public class PlayerStat : Stat
         _speed = 10f;
     }
 
-    void Update()
+    public override void OnDead()
     {
-        
+        Managers.Game.GameLose();
     }
 }
