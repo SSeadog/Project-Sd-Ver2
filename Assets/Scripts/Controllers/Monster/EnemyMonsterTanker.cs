@@ -9,7 +9,7 @@ public class EnemyMonsterTanker : EnemyMonster
     [SerializeField]
     private Transform attackPosition;
     [SerializeField]
-    private float splashRange = 10f;
+    private float splashRange = 5f;
 
     protected override void AttckTarget()
     {
@@ -30,20 +30,10 @@ public class EnemyMonsterTanker : EnemyMonster
                 if (CheckTeamTagname(rbody.tag) == false)
                     continue;
 
-                rbody.AddExplosionForce(1000f, attackPosition.position, 7f);
-                StartCoroutine(SetVelocityZero(rbody));
-
                 rbody.GetComponent<Stat>().GetAttacked(_stat);
             }
         }
 
         PlayAnim(Anims.Idle);
-    }
-
-    IEnumerator SetVelocityZero(Rigidbody rbody)
-    {
-        yield return new WaitForSeconds(0.3f);
-        if (rbody)
-            rbody.velocity = Vector3.zero;
     }
 }

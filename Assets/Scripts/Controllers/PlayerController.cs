@@ -76,7 +76,7 @@ public class PlayerController : MonoBehaviour
             _anim.CrossFade("Attack", 0.2f);
             _curAnim = Anims.Attack;
 
-            Invoke("EndFireArrow", 1f); // Animation Event로도 실행하고 애니메이션이 블랜드되어 끝까지 실행 못할 것도 대비하여 Invoke도 넣어줌
+            Invoke("EndFireArrow", 0.5f); // Animation Event로도 실행하고 애니메이션이 블랜드되어 끝까지 실행 못할 것도 대비하여 Invoke도 넣어줌
         }
     }
     

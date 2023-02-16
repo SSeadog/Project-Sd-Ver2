@@ -9,7 +9,7 @@ public class FriendlyMonsterTanker : FriendlyMonster
     [SerializeField]
     private Transform attackPosition;
     [SerializeField]
-    private float splashRange = 10f;
+    private float splashRange = 5f;
 
     protected override void AttckTarget()
     {
@@ -22,7 +22,6 @@ public class FriendlyMonsterTanker : FriendlyMonster
             return;
 
         Collider[] colliders = Physics.OverlapSphere(attackPosition.position, splashRange);
-        Vector3 hitVfxPosition = new Vector3(attackPosition.position.x, transform.position.y, attackPosition.position.z);
 
         foreach (Collider collider in colliders)
         {
@@ -32,20 +31,10 @@ public class FriendlyMonsterTanker : FriendlyMonster
                 if (CheckTeamTagname(rbody.tag) == false)
                     continue;
 
-                rbody.AddExplosionForce(1000f, attackPosition.position, 7f);
-                StartCoroutine(SetVelocityZero(rbody));
-
                 rbody.GetComponent<Stat>().GetAttacked(_stat);
             }
         }
 
         PlayAnim(Anims.Idle);
-    }
-
-    IEnumerator SetVelocityZero(Rigidbody rbody)
-    {
-        yield return new WaitForSeconds(0.3f);
-        if (rbody)
-            rbody.velocity = Vector3.zero;
     }
 }

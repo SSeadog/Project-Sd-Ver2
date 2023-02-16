@@ -29,6 +29,9 @@ public abstract class Stat : MonoBehaviour
 
     public void GetAttacked(Stat attacker)
     {
+        if (Hp == 0)
+            return;
+
         int damage = attacker.Power;
         float stiffTime = damage >= 20 ? 0.2f : 0f;
         

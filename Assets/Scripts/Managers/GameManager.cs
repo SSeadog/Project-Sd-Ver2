@@ -65,7 +65,7 @@ public class GameManager
         PlayerStat playerStat = player.GetComponent<PlayerStat>();
         if (playerStat.ResourcePoint + time * 10f < playerStat.MaxResourcePoint)
         {
-            player.GetComponent<PlayerStat>().ResourcePoint += time * 10f;
+            player.GetComponent<PlayerStat>().ResourcePoint += time * 2.5f;
         }
         else
         {

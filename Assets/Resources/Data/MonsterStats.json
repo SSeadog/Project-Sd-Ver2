@@ -18,7 +18,7 @@
     "MaxChaseDistance": 6
   },
   "FriendlyPowerMonster": {
-    "MaxHp": 200,
+    "MaxHp": 250,
     "Power": 10,
     "Speed": 5,
     "AttackRange": 3,
@@ -45,7 +45,7 @@
     "MaxChaseDistance": 6
   },
   "EnemyPowerMonster": {
-    "MaxHp": 200,
+    "MaxHp": 250,
     "Power": 10,
     "Speed": 5,
     "AttackRange": 3,

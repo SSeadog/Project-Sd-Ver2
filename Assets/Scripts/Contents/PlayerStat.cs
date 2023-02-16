@@ -18,7 +18,7 @@ public class PlayerStat : Stat
         _maxResourcePoint = 100f;
         _resourcePoint = 30f;
         _power = 30;
-        _speed = 10f;
+        _speed = 7f;
     }
 
     void Start()
