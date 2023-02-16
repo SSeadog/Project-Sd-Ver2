@@ -12,8 +12,6 @@ public class CameraController : MonoBehaviour
     [SerializeField] float _rightOffset = 0.4f;
 
     float _sensitivity = 30f;
-    float minRotX = -80f;
-    float maxRotX = 80f;
 
     public void Init()
     {
@@ -25,17 +23,11 @@ public class CameraController : MonoBehaviour
         if (_target == null)
             return;
 
-        // Todo
-        // 위나 아래를 볼때 카메라 뒤집어지는 오류 수정 필요
-
         Vector3 rot = new Vector3(-Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0f) * Time.deltaTime * _sensitivity;
 
         rot = transform.eulerAngles + rot;
         if (rot.x < 0)
             rot.x += 360f;
-
-        //if (rot.x > 80f && rot.x < )
-        //    rot.x = 80f;
 
         if (rot.x < 280f && rot.x > 190f)
             rot.x = 280f;

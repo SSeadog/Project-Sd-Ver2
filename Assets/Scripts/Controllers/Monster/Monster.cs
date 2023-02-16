@@ -10,25 +10,26 @@ public abstract class Monster : MonoBehaviour
     protected MonsterStat _stat;
 
     // AI
-    protected NavMeshAgent _navMeshAgent;
     public float _brainSpeed = 0.5f;
+    protected NavMeshAgent _navMeshAgent;
     protected List<Transform> _waypoints;
     protected int _currentWayPointIndex;
-    float _brainTimer;
     protected float _moveDeg = 0f;
+    float _brainTimer;
     float _degGap = 30f;
 
     // Attack
-    bool _isAttackReady = true;
-    float _currentAttackTime = 0f;
-    protected GameObject _attackTarget;
     protected enum AttackTargetType { Monster, Tower };
     protected AttackTargetType _curAttackTargetType;
+    protected GameObject _attackTarget;
     protected float _curTargetSize = 0f;
     protected Vector3 _towerPosition;
-
+    bool _isAttackReady = true;
+    float _currentAttackTime = 0f;
+    
     float _targetChaseDistance = 0f;
     Vector3 _beforePosition;
+
 
     // State
     enum MonsterState
@@ -109,7 +110,7 @@ public abstract class Monster : MonoBehaviour
 
         if (_isAttackReady == false)
         {
-            _currentAttackTime += _brainTimer;
+            _currentAttackTime += Time.deltaTime;
             if (_currentAttackTime >= _stat.AttackSpeed)
             {
                 _isAttackReady = true;
@@ -202,10 +203,10 @@ public abstract class Monster : MonoBehaviour
                         _attackTarget = null;
                         _targetChaseDistance = 0f;
 
-                        UpdateWayPoint();
-                        _navMeshAgent.SetDestination(_waypoints[_currentWayPointIndex].position);
+                        //Transform nextWayPoint = FindNextWayPoint();
+                        //_navMeshAgent.SetDestination(nextWayPoint.position);
 
-                        _currentMonsterState = MonsterState.Returning;
+                        _currentMonsterState = MonsterState.LookingForPath;
                     }
                 }
                 // attackTarget이 있고 attackRange 안에 있다면 공격 상태로 변경
@@ -219,7 +220,10 @@ public abstract class Monster : MonoBehaviour
                 if (!_attackTarget)
                 {
                     _attackTarget = null;
-                    UpdateWayPoint();
+
+                    Transform nextWayPoint = FindNextWayPoint();
+                    _navMeshAgent.SetDestination(nextWayPoint.position);
+
                     _currentMonsterState = MonsterState.LookingForPath;
                     break;
                 }
@@ -251,7 +255,10 @@ public abstract class Monster : MonoBehaviour
                 else
                 {
                     _attackTarget = null;
-                    UpdateWayPoint();
+
+                    Transform nextWayPoint = FindNextWayPoint();
+                    _navMeshAgent.SetDestination(nextWayPoint.position);
+
                     _currentMonsterState = MonsterState.LookingForPath;
                 }
 
@@ -272,7 +279,7 @@ public abstract class Monster : MonoBehaviour
 
     Transform FindNextWayPoint()
     {
-        // 현재 - 3 ~ 현재 + 3 사이 중 지금 위치에서 가장 가깝고 적절한 웨이포인트 찾기(못 찾으면? 그냥 현재 + 3 주기)
+        // 현재 - 3 ~ 현재 + 3 사이 중 지금 위치에서 가장 가깝고 적절한 웨이포인트 찾기
         float minDist = 99999f;
         int mindDistWaypointIndex = -1;
 
@@ -315,9 +322,13 @@ public abstract class Monster : MonoBehaviour
         }
 
         if (mindDistWaypointIndex != -1)
+        {
             _currentWayPointIndex = mindDistWaypointIndex;
-        else
+        }
+        else if (_currentWayPointIndex < _waypoints.Count - 1)
+        {
             _currentWayPointIndex++;
+        }
 
         return _waypoints[_currentWayPointIndex];
     }
@@ -340,19 +351,6 @@ public abstract class Monster : MonoBehaviour
     protected abstract void AttckTarget();
 
     protected abstract GameObject FindAttackTarget();
-
-    void UpdateWayPoint()
-    {
-        // 현재 위치보다 z가 작은 웨이포인트로 업데이트
-        for (int i = _currentWayPointIndex; i < _waypoints.Count - 1; i++)
-        {
-            if (transform.position.z < _waypoints[i].position.z)
-            {
-                _currentWayPointIndex = i;
-                break;
-            }
-        }
-    }
 
     public virtual void OnAttacked(float stiffingTime = 0f)
     {

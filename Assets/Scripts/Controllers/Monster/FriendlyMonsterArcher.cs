@@ -9,7 +9,7 @@ public class FriendlyMonsterArcher : FriendlyMonster
 
     protected override void AttckTarget()
     {
-        // Anim 따라서 실행되기에 따로 뭔가 할 필요 없음
+        // Animation Event로 실행하여 따로 동작 필요x
     }
 
     public void FireArrow()
@@ -17,8 +17,9 @@ public class FriendlyMonsterArcher : FriendlyMonster
         if (_attackTarget == null)
             return;
 
-        // 활 쏘기
         GameObject instanceArrow = Instantiate(arrow, arrowPosition.position, transform.rotation * Quaternion.Euler(90f, 0, 0));
+        instanceArrow.GetComponent<WeaponStat>().Init(_stat);
+
         Rigidbody arrowRigid = instanceArrow.GetComponent<Rigidbody>();
 
         arrowRigid.AddForce((_attackTarget.transform.position - transform.position).normalized * 2000f);

@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     PlayerStat _stat;
 
-    Animator _anim;
+    Vector3 _moveVec = Vector3.zero;
 
     enum Anims
     {
@@ -18,14 +18,14 @@ public class PlayerController : MonoBehaviour
         Attack
     }
     Anims _curAnim;
+    Animator _anim;
 
     bool _isAttack = false;
 
-    Vector3 _moveVec = Vector3.zero;
-
     GameObject _arrowOriginal;
-
     GameObject _arrowPosition;
+
+    [SerializeField] GameObject _handedArrow;
 
     void Start()
     {
@@ -36,9 +36,6 @@ public class PlayerController : MonoBehaviour
 
         _arrowOriginal = Resources.Load<GameObject>("Prefabs/Weapons/PlayerArrow");
         _arrowPosition = transform.Find("ArrowPosition").gameObject;
-
-        // OnDead에 함수 넣어줘야함
-        // 결과창 띄우기?
     }
 
     void Update()
@@ -164,15 +161,19 @@ public class PlayerController : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f))
         {
             Vector3 moveVec = (raycastHit.point - _arrowPosition.transform.position).normalized;
-            GameObject instantArrow = Instantiate(_arrowOriginal, _arrowPosition.transform.position, Quaternion.LookRotation(moveVec));
-            Rigidbody arrowRigid = instantArrow.GetComponent<Rigidbody>();
+            GameObject instanceArrow = Instantiate(_arrowOriginal, _arrowPosition.transform.position, Quaternion.LookRotation(moveVec));
+            instanceArrow.GetComponent<WeaponStat>().Init(_stat);
+            Rigidbody arrowRigid = instanceArrow.GetComponent<Rigidbody>();
             arrowRigid.AddForce(moveVec * 2000f);
         }
+
+        _handedArrow.SetActive(false);
     }
 
     public void EndFireArrow()
     {
         _isAttack = false;
+        _handedArrow.SetActive(true);
     }
 
     private bool CheckAttackCollisionTagname(string collder_tag)

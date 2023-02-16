@@ -2,23 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TowerBase : MonoBehaviour
+public abstract class TowerBase : MonoBehaviour
 {
-    [SerializeField] protected Define.ObjectType _type;
-
+    protected Define.ObjectType _type;
     protected TowerStat _stat;
-    // 스폰 루트
-    Transform _spawnRoot;
-    // waypoints
-    protected Transform _oppositeTowerTransform;
+    protected GameObject _oppositeTower;
     protected float _moveDeg = 0f;
+    
+    Transform _spawnRoot; // 스폰 루트
     float _degGap = 80f;
     
-    List<Transform> _lstWaypoint = new List<Transform>();
     public List<Transform> LstWayPoint { get { return _lstWaypoint; } }
+    List<Transform> _lstWaypoint = new List<Transform>();
 
-    public virtual void Init()
+    public virtual void Init(Define.ObjectType type)
     {
+        _type = type;
         _spawnRoot = transform.Find("spawnRoot");
         _stat = GetComponent<TowerStat>();
         _stat.OnDeadAction += OnDead;
@@ -26,16 +25,14 @@ public class TowerBase : MonoBehaviour
 
     void Start()
     {
-        Init();
-
         if (_type == Define.ObjectType.FriendlyTower)
         {
-            _oppositeTowerTransform = Managers.Game.enemyTower.transform;
+            _oppositeTower = Managers.Game.enemyTower;
             _moveDeg = 180f;
         }
         else if (_type == Define.ObjectType.EnemyTower)
         {
-            _oppositeTowerTransform = Managers.Game.friendlyTower.transform;
+            _oppositeTower = Managers.Game.friendlyTower;
             _moveDeg = 0f;
         }
 
@@ -65,7 +62,7 @@ public class TowerBase : MonoBehaviour
         Transform[] waypoints = transform.Find("Waypoints").GetComponentsInChildren<Transform>();
 
         Queue<Transform> queue = new Queue<Transform>();
-        Transform startPoint = _oppositeTowerTransform;
+        Transform startPoint = _oppositeTower.transform;
         {
             float minDist = 99999f;
             Transform minDistPoint = null;

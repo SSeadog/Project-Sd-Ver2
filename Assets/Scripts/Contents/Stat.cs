@@ -51,8 +51,6 @@ public abstract class Stat : MonoBehaviour
 
     public virtual void OnDead()
     {
-        Debug.Log("OnDead");
-        // 죽었을 때 할 행동
         if (OnDeadAction != null)
             OnDeadAction.Invoke();
     }

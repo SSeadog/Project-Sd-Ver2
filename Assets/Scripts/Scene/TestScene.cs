@@ -18,16 +18,15 @@ public class TestScene : BaseScene
 
             if (key == Define.ObjectType.FriendlyTower.ToString())
             {
-                instance.GetComponent<FriendlyTowerController>().Init();
+                instance.GetComponent<FriendlyTowerController>().Init(Define.ObjectType.FriendlyTower);
             }
             else if (key == Define.ObjectType.EnemyTower.ToString())
             {
-                instance.GetComponent<EnemyTowerController>().Init();
+                instance.GetComponent<EnemyTowerController>().Init(Define.ObjectType.EnemyTower);
             }
             else if (key == Define.ObjectType.Player.ToString())
             {
                 Managers.Game.player = instance;
-
             }
         }
 
@@ -37,7 +36,6 @@ public class TestScene : BaseScene
 
     public override void Clear()
     {
-        // 老窜 悼利积己沁带 player, towers父 公炼扒 昏力
         Destroy(Managers.Game.player);
         Destroy(Managers.Game.friendlyTower);
         Destroy(Managers.Game.enemyTower);

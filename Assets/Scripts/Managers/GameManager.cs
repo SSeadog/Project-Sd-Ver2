@@ -12,6 +12,8 @@ public class GameManager
     // -1 = 게임 외 스테이지. 1~n 스테이지 번호로 두며 게임 스테이지로 취급
     public int stageNum;
 
+    public UIController uIController;
+
     public GameObject friendlyTower;
     public GameObject enemyTower;
 
@@ -155,21 +157,21 @@ public class GameManager
     {
         Time.timeScale = 0f;
         SetActiveCursor(true);
-        UIController uc = GameObject.FindObjectOfType<UIController>();
-        uc._gameEndingUI.ShowLoseUI();
+        uIController._gameEndingUI.ShowLoseUI();
     }
 
     public void GameWin()
     {
         Time.timeScale = 0f;
         SetActiveCursor(true);
-        UIController uc = GameObject.FindObjectOfType<UIController>();
-        uc._gameEndingUI.ShowWinUI();
+        uIController._gameEndingUI.ShowWinUI();
     }
 
     public void Clear()
     {
         stageNum = -1;
+
+        uIController = null;
 
         friendlyTower = null;
         enemyTower = null;

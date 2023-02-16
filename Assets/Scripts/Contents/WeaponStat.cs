@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WeaponStat : Stat
 {
-    [SerializeField] Stat _baseStat;
+    Stat _baseStat;
 
     public void Init(Stat baseStat)
     {

@@ -5,9 +5,6 @@ using UnityEngine.UI;
 
 public class PlayerStatusUI : MonoBehaviour
 {
-    // Todo
-    // Rp ¿¬µ¿
-
     Transform _hpBar;
     Transform _rpBar;
 

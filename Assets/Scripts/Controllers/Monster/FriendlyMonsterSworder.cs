@@ -4,15 +4,9 @@ using UnityEngine;
 
 public class FriendlyMonsterSworder : FriendlyMonster
 {
-    //[SerializeField]
-    //private GameObject effect;
-
-    //[SerializeField]
-    //AudioSource audioSource;
-
     protected override void AttckTarget()
     {
-        //audioSource.PlayOneShot(audioSource.clip);
+        // Animation Event로 실행하여 따로 동작 필요x
     }
 
     public void OnAttackEvent()

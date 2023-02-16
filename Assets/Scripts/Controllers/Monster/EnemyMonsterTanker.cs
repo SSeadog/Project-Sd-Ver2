@@ -7,9 +7,12 @@ using UnityEngine.UI;
 public class EnemyMonsterTanker : EnemyMonster
 {
     [SerializeField]
-    private Transform attackPosition;
+    Transform _attackPosition;
     [SerializeField]
-    private float splashRange = 5f;
+    float _splashRange = 5f;
+
+    [SerializeField]
+    GameObject _explosionEffect;
 
     protected override void AttckTarget()
     {
@@ -21,7 +24,9 @@ public class EnemyMonsterTanker : EnemyMonster
         if (_curAnim == Anims.Dead)
             return;
 
-        Collider[] colliders = Physics.OverlapSphere(attackPosition.position, splashRange);
+        Destroy(Instantiate(_explosionEffect, _attackPosition.position, Quaternion.identity), 2f);
+
+        Collider[] colliders = Physics.OverlapSphere(_attackPosition.position, _splashRange);
         foreach (Collider collider in colliders)
         {
             Rigidbody rbody = collider.GetComponent<Rigidbody>();

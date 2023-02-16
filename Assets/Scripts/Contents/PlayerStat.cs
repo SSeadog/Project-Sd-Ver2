@@ -17,7 +17,7 @@ public class PlayerStat : Stat
         _hp = _maxHp;
         _maxResourcePoint = 100f;
         _resourcePoint = 30f;
-        _power = 30;
+        _power = 20;
         _speed = 7f;
     }
 

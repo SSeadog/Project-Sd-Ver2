@@ -8,8 +8,6 @@ public class ArrowController : MonoBehaviour
     Collider _collider;
     Rigidbody _r;
 
-    public float attackPower = 0f;
-
     private float aliveTime = 5f;
     private float curAliveTime = 0f;
 
@@ -37,8 +35,6 @@ public class ArrowController : MonoBehaviour
         SetRotation();
 
         Vector3 v = rigid.velocity;
-        //rigid.velocity -= new Vector3(v.x * 0.001f, 0, v.z * 0.001f);
-        //rigid.velocity += Vector3.down * 0.98f;
     }
 
     void SetRotation()

@@ -38,11 +38,11 @@ public abstract class EnemyMonster : Monster
         }
 
         // 플레이어가 거리가 더 가까운지 확인
-        Vector3 playerPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
+        Vector3 playerPosition = Managers.Game.player.transform.position;
         if (Vector3.Distance(transform.position, playerPosition) - 1f < minDistance)
         {
             minDistance = Vector3.Distance(transform.position, playerPosition) - 1f;
-            minDistanceGameObject = GameObject.FindGameObjectWithTag("Player");
+            minDistanceGameObject = Managers.Game.player;
             _curAttackTargetType = AttackTargetType.Monster;
             _curTargetSize = 1f;
         }

@@ -13,11 +13,7 @@ public class UIController : MonoBehaviour
 
     void Start()
     {
-        _playerStatusUI = transform.Find("PlayerStatusUI").GetComponent<PlayerStatusUI>();
-        _playTimeUI = transform.Find("PlayTimeUI").GetComponent<PlayTimeUI>();
-        _friendlyMonsterPanelUI = transform.Find("FriendlyMonsterPanelUI").GetComponent<FriendlyMonsterPanelUI>();
-        _escMenuUI = transform.Find("ESCMenuUI").GetComponent<ESCMenuUI>();
-        _gameEndingUI = transform.Find("GameEndingUI").GetComponent<GameEndingUI>();
+        Managers.Game.uIController = this;
     }
 
     void Update()
