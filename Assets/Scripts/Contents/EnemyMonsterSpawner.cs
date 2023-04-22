@@ -19,11 +19,14 @@ public class EnemyMonsterSpawner : MonoBehaviour
             {
                 if (Managers.Game.SpawnInfo[i].spawnTime < Managers.Game.playTime && !Managers.Game.SpawnInfo[i].isSpawned)
                 {
-                    if (Managers.Game.SpawnInfo[i].type == Define.ObjectType.EnemyMeleeMonster)
-                        Managers.Game.Spawn(Define.ObjectType.EnemyMeleeMonster, "Prefabs/Monsters/EnemyMeleeMonster");
-                    else if (Managers.Game.SpawnInfo[i].type == Define.ObjectType.EnemyRangedMonster)
-                        Managers.Game.Spawn(Define.ObjectType.EnemyRangedMonster, "Prefabs/Monsters/EnemyRangedMonster");
+                    GameObject instance = null;
 
+                    if (Managers.Game.SpawnInfo[i].type == Define.ObjectType.EnemyMeleeMonster)
+                        instance = Managers.Game.Spawn(Define.ObjectType.EnemyMeleeMonster, "Prefabs/Monsters/EnemyMeleeMonster");
+                    else if (Managers.Game.SpawnInfo[i].type == Define.ObjectType.EnemyRangedMonster)
+                        instance = Managers.Game.Spawn(Define.ObjectType.EnemyRangedMonster, "Prefabs/Monsters/EnemyRangedMonster");
+
+                    instance.transform.rotation = Quaternion.Euler(0, 180, 0);
                     Managers.Game.SpawnInfo[i].isSpawned = true;
                 }
                 else

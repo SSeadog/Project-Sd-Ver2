@@ -25,6 +25,7 @@ public abstract class Monster : MonoBehaviour
     protected int _currentWayPointIndex;
     protected float _moveDeg = 0f;
     float _degGap = 30f;
+    float _searchTime = 0.5f;
 
     // Attack
     protected GameObject _attackTarget;
@@ -45,8 +46,8 @@ public abstract class Monster : MonoBehaviour
     protected Animator _anim;
 
     // State
-    CMonsterState _state;
-    void SetState(CMonsterState state)
+    MonsterState _state;
+    void SetState(MonsterState state)
     {
         if (_state != null)
             _state.OnEnd();
@@ -243,27 +244,7 @@ public abstract class Monster : MonoBehaviour
         }
     }
 
-    // 몬스터 상태를 확인하기 위한 임시 함수. 상태마다 색상을 변경
-    void TestChangeColor(Color color)
-    {
-        SkinnedMeshRenderer[] mrs = GetComponentsInChildren<SkinnedMeshRenderer>();
-
-        List<List<Color>> colors = new List<List<Color>>();
-
-        for (int i = 0; i < mrs.Length; i++)
-        {
-            Material[] mats = mrs[i].materials;
-            colors.Add(new List<Color>());
-
-            for (int j = 0; j < mats.Length; j++)
-            {
-                colors[i].Add(mats[j].color);
-                mats[j].color = color;
-            }
-        }
-    }
-
-    class CMonsterState
+    class MonsterState
     {
         protected Monster _m;
 
@@ -272,24 +253,34 @@ public abstract class Monster : MonoBehaviour
         public virtual void OnEnd() { }
     }
 
-    class MonsterIdleState : CMonsterState
+    class MonsterIdleState : MonsterState
     {
+        float _searchTimer;
+
         public override void OnStart(Monster m)
         {
             base.OnStart(m);
 
             _m.PlayAnim(Anims.Idle);
+            _searchTimer = _m._searchTime;
         }
 
         public override void OnAction()
         {
-            _m._attackTarget = _m.FindMinDistAttackTarget();
+            _searchTimer += Time.deltaTime;
+            if (_searchTimer > _m._searchTime)
+            {
+                _m._attackTarget = _m.FindMinDistAttackTarget();
+                _searchTimer = 0f;
+            }
 
+            // 공격 대상을 발견했다면 -> 추격 상태로 변경
             if (_m._attackTarget)
             {
                 _m.SetState(new MonsterChaseState());
             }
 
+            // 다음 웨이포인트가 있다면 -> 이동 상태로 변경 & 다음 웨이포인트로 목적지 설정
             if (_m._currentWayPointIndex < _m._waypoints.Count - 1)
             {
                 Transform nextWaypoint = _m.FindNextWaypoint();
@@ -297,18 +288,13 @@ public abstract class Monster : MonoBehaviour
                 state.SetDest(nextWaypoint.position);
                 _m.SetState(state);
             }
-            else
-            {
-                MonsterMoveState state = new MonsterMoveState();
-                state.SetDest(Managers.Game.EnemyTower.transform.position);
-                _m.SetState(state);
-            }
         }
     }
     
-    class MonsterMoveState : CMonsterState
+    class MonsterMoveState : MonsterState
     {
         Vector3 _dest;
+        float _searchTimer;
 
         public override void OnStart(Monster m)
         {
@@ -325,7 +311,12 @@ public abstract class Monster : MonoBehaviour
 
         public override void OnAction()
         {
-            _m._attackTarget = _m.FindMinDistAttackTarget();
+            _searchTimer += Time.deltaTime;
+            if (_searchTimer > _m._searchTime)
+            {
+                _m._attackTarget = _m.FindMinDistAttackTarget();
+                _searchTimer = 0f;
+            }
 
             // 공격 대상이 있다면 쫓는 상태로 변경
             if (_m._attackTarget)
@@ -345,7 +336,7 @@ public abstract class Monster : MonoBehaviour
         }
     }
 
-    class MonsterChaseState : CMonsterState
+    class MonsterChaseState : MonsterState
     {
         float _chaseDist = 0f;
         Vector3 _beforePos;
@@ -392,7 +383,7 @@ public abstract class Monster : MonoBehaviour
         }
     }
 
-    class MonsterAttackState : CMonsterState
+    class MonsterAttackState : MonsterState
     {
         public override void OnStart(Monster m)
         {
@@ -444,7 +435,7 @@ public abstract class Monster : MonoBehaviour
         }
     }
 
-    class MonsterReturningState : CMonsterState
+    class MonsterReturningState : MonsterState
     {
         public override void OnStart(Monster m)
         {
@@ -498,9 +489,9 @@ public abstract class Monster : MonoBehaviour
         }
     }
 
-    class MonsterStiffingState : CMonsterState
+    class MonsterStiffingState : MonsterState
     {
-        CMonsterState _beforeState;
+        MonsterState _beforeState;
         float _stiffTime = 0.2f;
 
         public override void OnStart(Monster m)
@@ -516,7 +507,7 @@ public abstract class Monster : MonoBehaviour
             _stiffTime = stiffTime;
         }
 
-        public void SetBeforeState(CMonsterState beforeState)
+        public void SetBeforeState(MonsterState beforeState)
         {
             _beforeState = beforeState;
         }
@@ -528,7 +519,7 @@ public abstract class Monster : MonoBehaviour
         }
     }
 
-    class MonsterDieState : CMonsterState
+    class MonsterDieState : MonsterState
     {
         public override void OnStart(Monster m)
         {
