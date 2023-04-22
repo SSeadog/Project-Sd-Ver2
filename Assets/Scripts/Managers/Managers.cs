@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Managers : MonoBehaviour
 {
-    public static Managers _instance;
+    static Managers _instance;
     public static Managers Instance { get { Init(); return _instance; } }
 
-    public DataManager _data = new DataManager();
-    public GameManager _game = new GameManager();
-    public SceneManagerEx _scene = new SceneManagerEx();
+    DataManager _data = new DataManager();
+    GameManager _game = new GameManager();
+    SceneManagerEx _scene = new SceneManagerEx();
 
     public static DataManager Data { get { return Instance._data; } }
     public static GameManager Game { get { return Instance._game; } }
@@ -38,6 +38,7 @@ public class Managers : MonoBehaviour
             _instance = manager;
             _instance._game.Init();
             _instance._data.Init();
+            Application.targetFrameRate = 60;
         }
     }
 
@@ -48,7 +49,7 @@ public class Managers : MonoBehaviour
 
     void Update()
     {
-        if (_instance._game.stageNum != -1)
+        if (_instance._game.StageNum != -1)
         {
             _instance._game.UpdatePlayTime(Time.deltaTime);
             _instance._game.UpdatePlayerRp(Time.deltaTime);
@@ -59,6 +60,5 @@ public class Managers : MonoBehaviour
     {
         _instance._data.Clear();
         _instance._game.Clear();
-        _instance._scene.Clear();
     }
 }

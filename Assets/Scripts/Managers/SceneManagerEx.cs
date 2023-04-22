@@ -12,19 +12,13 @@ public class SceneManagerEx
         Managers.Clear();
 
         Time.timeScale = 1f;
-        Managers.Game.stageNum = stageNum;
+        Managers.Game.StageNum = stageNum;
 
         if (stageNum != -1)
         {
-            Managers.Game.spawnInfo = Util.LoadJsonList<List<Define.spawnItem>>("Data/Stages/Spawn_" + stageNum);
+            Managers.Game.SpawnInfo = Util.LoadJsonList<List<Define.spawnItem>>("Data/Stages/Spawn_" + stageNum);
         }
 
         SceneManager.LoadScene(sceneName);
-    }
-
-    public void Clear()
-    {
-        // _scene 할당 해제
-        CurrentScene.Clear();
     }
 }

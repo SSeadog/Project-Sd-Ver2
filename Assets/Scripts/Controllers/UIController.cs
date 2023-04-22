@@ -13,7 +13,7 @@ public class UIController : MonoBehaviour
 
     void Start()
     {
-        Managers.Game.uIController = this;
+        Managers.Game.UIController = this;
     }
 
     void Update()

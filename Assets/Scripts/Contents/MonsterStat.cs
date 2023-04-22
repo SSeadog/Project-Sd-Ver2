@@ -21,6 +21,7 @@ public class MonsterStat : Stat
         _hp = _maxHp;
         _power = stat.Power;
         _speed = stat.Speed;
+        _size = stat.Size;
         _attackRange = stat.AttackRange;
         _sightRange = stat.SightRange;
         _attackSpeed = stat.AttackSpeed;

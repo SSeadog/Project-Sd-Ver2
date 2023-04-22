@@ -5,8 +5,11 @@ using UnityEngine;
 
 public class DataManager
 {
-    public Dictionary<string, Define.SettingInfo> settingInfo;
-    public Dictionary<string, Define.MonsterStat> monsterStats;
+    Dictionary<string, Define.SettingInfo> settingInfo;
+    Dictionary<string, Define.MonsterStat> monsterStats;
+
+    public Dictionary<string, Define.SettingInfo> SettingInfo { get { return settingInfo; } }
+    public Dictionary<string, Define.MonsterStat> MonsterStats { get { return monsterStats; } }
 
     public void Init()
     {

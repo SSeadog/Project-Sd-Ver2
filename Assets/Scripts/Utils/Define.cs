@@ -50,6 +50,7 @@ public class Define
         public int MaxHp;
         public int Power;
         public float Speed;
+        public float Size;
         public float AttackRange;
         public float SightRange;
         public float AttackSpeed;

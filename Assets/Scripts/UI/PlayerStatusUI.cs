@@ -31,10 +31,10 @@ public class PlayerStatusUI : MonoBehaviour
 
     void Update()
     {
-        if (Managers.Game.player == null)
+        if (Managers.Game.Player == null)
             return;
 
-        PlayerStat player = Managers.Game.player.GetComponent<PlayerStat>();
+        PlayerStat player = Managers.Game.Player.GetComponent<PlayerStat>();
         
         if (player.MaxHp != 0)
         {

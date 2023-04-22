@@ -22,7 +22,7 @@ public class FriendlyMonsterPanelUI : MonoBehaviour
         // 여기도 수정 필요
         if (_playerStat == null)
         {
-            _playerStat = Managers.Game.player.GetComponent<PlayerStat>();
+            _playerStat = Managers.Game.Player.GetComponent<PlayerStat>();
             return;
         }
 

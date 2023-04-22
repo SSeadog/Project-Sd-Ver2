@@ -13,18 +13,18 @@ public class EnemyMonsterSpawner : MonoBehaviour
 
     IEnumerator CoSpawning()
     {
-        while (Managers.Game.spawnedEnemyMonsterCount < Managers.Game.spawnInfo.Count)
+        while (Managers.Game.spawnedEnemyMonsterCount < Managers.Game.SpawnInfo.Count)
         {
-            for (int i = Managers.Game.spawnedEnemyMonsterCount; i < Managers.Game.spawnInfo.Count; i++)
+            for (int i = Managers.Game.spawnedEnemyMonsterCount; i < Managers.Game.SpawnInfo.Count; i++)
             {
-                if (Managers.Game.spawnInfo[i].spawnTime < Managers.Game.playTime && !Managers.Game.spawnInfo[i].isSpawned)
+                if (Managers.Game.SpawnInfo[i].spawnTime < Managers.Game.playTime && !Managers.Game.SpawnInfo[i].isSpawned)
                 {
-                    if (Managers.Game.spawnInfo[i].type == Define.ObjectType.EnemyMeleeMonster)
+                    if (Managers.Game.SpawnInfo[i].type == Define.ObjectType.EnemyMeleeMonster)
                         Managers.Game.Spawn(Define.ObjectType.EnemyMeleeMonster, "Prefabs/Monsters/EnemyMeleeMonster");
-                    else if (Managers.Game.spawnInfo[i].type == Define.ObjectType.EnemyRangedMonster)
+                    else if (Managers.Game.SpawnInfo[i].type == Define.ObjectType.EnemyRangedMonster)
                         Managers.Game.Spawn(Define.ObjectType.EnemyRangedMonster, "Prefabs/Monsters/EnemyRangedMonster");
 
-                    Managers.Game.spawnInfo[i].isSpawned = true;
+                    Managers.Game.SpawnInfo[i].isSpawned = true;
                 }
                 else
                 {

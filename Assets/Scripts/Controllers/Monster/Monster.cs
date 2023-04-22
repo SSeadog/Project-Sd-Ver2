@@ -1,54 +1,40 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UI;
+using static Define;
+
+// FindMinDistAttackTarget()를 매 update마다 실행하는 건 부담이 있을 거 같은데
+// 그래서 지금은 LookingForState, Walk상태에서만 찾도록 했는데
+// 더 좋은 방법이 있을까?
+// 1. FindMinDistAttackTarget()함수 비용 절감
+// 2. 실행 주기에 텀 더주기
+
+// 공격상태일 때 멈추는 기능 넣고 공격 상태 벗어날 때 다시 움직일 수 있도록 설정하는 부분 추가 필요
 
 public abstract class Monster : MonoBehaviour
 {
     protected MonsterStat _stat;
+    Rigidbody _r;
 
     // AI
-    public float _brainSpeed = 0.5f;
     protected NavMeshAgent _navMeshAgent;
     protected List<Transform> _waypoints;
     protected int _currentWayPointIndex;
     protected float _moveDeg = 0f;
-    float _brainTimer;
     float _degGap = 30f;
 
     // Attack
-    protected enum AttackTargetType { Monster, Tower };
-    protected AttackTargetType _curAttackTargetType;
     protected GameObject _attackTarget;
     protected float _curTargetSize = 0f;
     protected Vector3 _towerPosition;
     bool _isAttackReady = true;
     float _currentAttackTime = 0f;
     
-    float _targetChaseDistance = 0f;
-    Vector3 _beforePosition;
-
-
-    // State
-    enum MonsterState
-    {
-        Idle,
-        Walking,
-        LookingForPath,
-        Chasing,
-        Attacking,
-        Returning,
-        Stiffing,
-        Dead
-    };
-    MonsterState _currentMonsterState = MonsterState.Idle;
-
-    Rigidbody _r;
-    
-    protected Animator _anim;
-    protected enum Anims
+    // Animation
+    public enum Anims
     {
         Idle,
         Walk,
@@ -56,12 +42,22 @@ public abstract class Monster : MonoBehaviour
         Dead
     }
     protected Anims _curAnim = Anims.Idle;
+    protected Animator _anim;
 
-
-    public virtual void Init()
+    // State
+    CMonsterState _state;
+    void SetState(CMonsterState state)
     {
+        if (_state != null)
+            _state.OnEnd();
 
+        _state = state;
+
+        if (_state != null)
+            _state.OnStart(this);
     }
+
+    public virtual void Init() { }
 
     void Start()
     {
@@ -79,34 +75,12 @@ public abstract class Monster : MonoBehaviour
 
         _currentWayPointIndex = 0;
 
-        switch(_stat._type)
-        {
-            case Define.ObjectType.FriendlyMeleeMonster:
-            case Define.ObjectType.FriendlyRangedMonster:
-            case Define.ObjectType.FriendlyPowerMonster:
-                _moveDeg = 0f;
-                break;
-            case Define.ObjectType.EnemyMeleeMonster:
-            case Define.ObjectType.EnemyRangedMonster:
-            case Define.ObjectType.EnemyPowerMonster:
-                _moveDeg = 180;
-                break;
-        }
+        SetState(new MonsterIdleState());
     }
 
     void Update()
     {
-        if (_currentMonsterState == MonsterState.Dead)
-            return;
-
-        //  AI 실행 주기
-        _brainTimer += Time.deltaTime;
-        if (_brainTimer >= _brainSpeed)
-        {
-            AILogic();
-
-            _brainTimer = 0;
-        }
+        _state?.OnAction();
 
         if (_isAttackReady == false)
         {
@@ -119,167 +93,20 @@ public abstract class Monster : MonoBehaviour
         }
     }
 
-    void AILogic()
+    float GetDistanceToAttackTarget()
     {
-        if (_towerPosition == null)
-            return;
-
-        switch (_currentMonsterState)
-        {
-            case MonsterState.Idle:
-                PlayAnim(Anims.Idle);
-                _currentMonsterState = MonsterState.LookingForPath;
-
-                break;
-            case MonsterState.Walking:
-                PlayAnim(Anims.Walk);
-                _attackTarget = FindAttackTarget();
-
-                if (_attackTarget)
-                {
-                    _beforePosition = transform.position;
-                    _currentMonsterState = MonsterState.Chasing;
-                }
-                else if (!_attackTarget && _currentWayPointIndex < _waypoints.Count && _navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
-                {
-                    _currentMonsterState = MonsterState.LookingForPath;
-                    break;
-                }
-                else if (!_attackTarget)
-                {
-                    _navMeshAgent.SetDestination(_waypoints[_currentWayPointIndex].position);
-                    break;
-                }
-
-                break;
-            case MonsterState.LookingForPath:
-                PlayAnim(Anims.Idle);
-                _navMeshAgent.isStopped = false;
-                _attackTarget = FindAttackTarget();
-
-                if (_attackTarget)
-                {
-                    _beforePosition = transform.position;
-                    _currentMonsterState = MonsterState.Chasing;
-                    break;
-                }
-
-                // 다음 웨이포인트로 이동
-                if (_currentWayPointIndex < _waypoints.Count - 1)
-                {
-                    Transform nextWaypoint = FindNextWayPoint();
-                    _navMeshAgent.SetDestination(nextWaypoint.position);
-                    _currentMonsterState = MonsterState.Walking;
-                }
-                // 끝까지 갔다면 무조건 타워로 이동
-                else
-                {
-                    _navMeshAgent.SetDestination(Managers.Game.enemyTower.transform.position);
-                    _currentMonsterState = MonsterState.Walking;
-                }
-
-                break;
-            case MonsterState.Chasing:
-                if (!_attackTarget)
-                {
-                    _attackTarget = null;
-                    _currentMonsterState = MonsterState.LookingForPath;
-                    break;
-                }
-
-                // attackTarget이 있고 attackRange 밖에 있다면 추격 거리 기록
-                else if (_attackTarget && Vector3.Distance(transform.position, _attackTarget.transform.position) - _curTargetSize > _stat.AttackRange)
-                {
-                    PlayAnim(Anims.Walk);
-
-                    _navMeshAgent.isStopped = false;
-                    _navMeshAgent.SetDestination(_attackTarget.transform.position);
-                    _targetChaseDistance += Vector3.Distance(transform.position, _beforePosition);
-                    _beforePosition = transform.position;
-
-                    // 최대 추격 거리만큼 쫓아갔다면 다시 원래 루트로 돌아오기
-                    if (_targetChaseDistance > _stat.MaxChaseDistance)
-                    {
-                        _attackTarget = null;
-                        _targetChaseDistance = 0f;
-
-                        //Transform nextWayPoint = FindNextWayPoint();
-                        //_navMeshAgent.SetDestination(nextWayPoint.position);
-
-                        _currentMonsterState = MonsterState.LookingForPath;
-                    }
-                }
-                // attackTarget이 있고 attackRange 안에 있다면 공격 상태로 변경
-                else if (_attackTarget && Vector3.Distance(transform.position, _attackTarget.transform.position) - _curTargetSize < _stat.AttackRange)
-                {
-                    _currentMonsterState = MonsterState.Attacking;
-                }
-
-                break;
-            case MonsterState.Attacking:
-                if (!_attackTarget)
-                {
-                    _attackTarget = null;
-
-                    Transform nextWayPoint = FindNextWayPoint();
-                    _navMeshAgent.SetDestination(nextWayPoint.position);
-
-                    _currentMonsterState = MonsterState.LookingForPath;
-                    break;
-                }
-
-                _navMeshAgent.isStopped = true;
-
-                // 공격 대상이 시야 안에 있다면
-                if (_navMeshAgent.remainingDistance - _curTargetSize < _stat.SightRange)
-                {
-                    // 공격 대상이 공격 범위 밖에 있다면
-                    if (Vector3.Distance(transform.position, _attackTarget.transform.position) - _curTargetSize > _stat.AttackRange)
-                    {
-                        _beforePosition = transform.position;
-                        _currentMonsterState = MonsterState.Chasing;
-                        break;
-                    }
-
-                    FaceTarget();
-
-                    // 공격 준비가 됐다면 공격
-                    if (_isAttackReady)
-                    {
-                        PlayAnim(Anims.Attack);
-                        AttckTarget();
-                        _isAttackReady = false;
-                    }
-                }
-                // 공격 대상이 시야 밖에 있다면
-                else
-                {
-                    _attackTarget = null;
-
-                    Transform nextWayPoint = FindNextWayPoint();
-                    _navMeshAgent.SetDestination(nextWayPoint.position);
-
-                    _currentMonsterState = MonsterState.LookingForPath;
-                }
-
-                break;
-            case MonsterState.Returning:
-                if (_navMeshAgent.remainingDistance < _navMeshAgent.stoppingDistance)
-                {
-                    _currentMonsterState = MonsterState.LookingForPath;
-                }
-
-                PlayAnim(Anims.Walk);
-
-                break;
-            case MonsterState.Stiffing:
-                break;
-        }
+        return Vector3.Distance(transform.position, _attackTarget.transform.position) - _curTargetSize;
     }
 
-    Transform FindNextWayPoint()
+    void Move(Vector3 pos)
     {
-        // 현재 - 3 ~ 현재 + 3 사이 중 지금 위치에서 가장 가깝고 적절한 웨이포인트 찾기
+        if (_navMeshAgent.destination != pos)
+            _navMeshAgent.SetDestination(pos);
+    }
+
+    Transform FindNextWaypoint()
+    {
+        // 현재 - 3 ~ 현재 + 2 사이 중 지금 위치에서 가장 가깝고 적절한 웨이포인트 찾기
         float minDist = 99999f;
         int mindDistWaypointIndex = -1;
 
@@ -333,7 +160,7 @@ public abstract class Monster : MonoBehaviour
         return _waypoints[_currentWayPointIndex];
     }
 
-    protected void PlayAnim(Anims animation)
+    public void PlayAnim(Anims animation)
     {
         if (_curAnim == animation)
             return;
@@ -350,7 +177,7 @@ public abstract class Monster : MonoBehaviour
 
     protected abstract void AttckTarget();
 
-    protected abstract GameObject FindAttackTarget();
+    protected abstract GameObject FindMinDistAttackTarget();
 
     public virtual void OnAttacked(float stiffingTime = 0f)
     {
@@ -358,29 +185,35 @@ public abstract class Monster : MonoBehaviour
         {
             return;
         }
-        
-        StartCoroutine(CoStiff(stiffingTime));
-        StartCoroutine(CoChangeColor(stiffingTime));
+
+        MonsterStiffingState state = new MonsterStiffingState();
+        state.SetBeforeState(_state);
+        state.SetStiffTime(0.2f);
+        SetState(state);
     }
 
-    IEnumerator CoStiff(float time)
+    public virtual void OnDead()
     {
-        MonsterState beforeState = _currentMonsterState;
-        _currentMonsterState = MonsterState.Stiffing;
-        _navMeshAgent.speed = 0f;
-        _navMeshAgent.velocity = Vector3.zero;
-        _anim.speed = 0f;
-        
-        yield return new WaitForSeconds(time);
-
-        _currentMonsterState = beforeState;
-        _navMeshAgent.speed = _stat.Speed;
-        _anim.speed = 1f;
+        SetState(new MonsterDieState());
     }
 
-    IEnumerator CoChangeColor(float time)
+    protected virtual bool CheckTeamTagname(string collder_tag)
     {
-        SkinnedMeshRenderer[] mrs = gameObject.GetComponentsInChildren<SkinnedMeshRenderer>();
+        return false;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!CheckTeamTagname(other.tag))
+            return;
+
+        Stat attackerStat = other.GetComponent<Stat>();
+        _stat.GetAttacked(attackerStat);
+    }
+
+    IEnumerator CoChangeColor(float time, Color color)
+    {
+        SkinnedMeshRenderer[] mrs = GetComponentsInChildren<SkinnedMeshRenderer>();
 
         List<List<Color>> colors = new List<List<Color>>();
 
@@ -392,7 +225,7 @@ public abstract class Monster : MonoBehaviour
             for (int j = 0; j < mats.Length; j++)
             {
                 colors[i].Add(mats[j].color);
-                mats[j].color = Color.red;
+                mats[j].color = color;
             }
         }
 
@@ -410,26 +243,300 @@ public abstract class Monster : MonoBehaviour
         }
     }
 
-    public virtual void OnDead()
+    // 몬스터 상태를 확인하기 위한 임시 함수. 상태마다 색상을 변경
+    void TestChangeColor(Color color)
     {
-        PlayAnim(Anims.Dead);
-        _currentMonsterState = MonsterState.Dead;
+        SkinnedMeshRenderer[] mrs = GetComponentsInChildren<SkinnedMeshRenderer>();
 
-        GetComponent<CapsuleCollider>().enabled = false;
-        _navMeshAgent.isStopped = true;
+        List<List<Color>> colors = new List<List<Color>>();
+
+        for (int i = 0; i < mrs.Length; i++)
+        {
+            Material[] mats = mrs[i].materials;
+            colors.Add(new List<Color>());
+
+            for (int j = 0; j < mats.Length; j++)
+            {
+                colors[i].Add(mats[j].color);
+                mats[j].color = color;
+            }
+        }
     }
 
-    protected virtual bool CheckTeamTagname(string collder_tag)
+    class CMonsterState
     {
-        return false;
+        protected Monster _m;
+
+        public virtual void OnStart(Monster m) { _m = m; }
+        public virtual void OnAction() { }
+        public virtual void OnEnd() { }
     }
 
-    private void OnTriggerEnter(Collider other)
+    class MonsterIdleState : CMonsterState
     {
-        if (!CheckTeamTagname(other.tag))
-            return;
+        public override void OnStart(Monster m)
+        {
+            base.OnStart(m);
 
-        Stat attackerStat = other.GetComponent<Stat>();
-        _stat.GetAttacked(attackerStat);
+            _m.PlayAnim(Anims.Idle);
+        }
+
+        public override void OnAction()
+        {
+            _m._attackTarget = _m.FindMinDistAttackTarget();
+
+            if (_m._attackTarget)
+            {
+                _m.SetState(new MonsterChaseState());
+            }
+
+            if (_m._currentWayPointIndex < _m._waypoints.Count - 1)
+            {
+                Transform nextWaypoint = _m.FindNextWaypoint();
+                MonsterMoveState state = new MonsterMoveState();
+                state.SetDest(nextWaypoint.position);
+                _m.SetState(state);
+            }
+            else
+            {
+                MonsterMoveState state = new MonsterMoveState();
+                state.SetDest(Managers.Game.EnemyTower.transform.position);
+                _m.SetState(state);
+            }
+        }
+    }
+    
+    class MonsterMoveState : CMonsterState
+    {
+        Vector3 _dest;
+
+        public override void OnStart(Monster m)
+        {
+            base.OnStart(m);
+
+            _m.PlayAnim(Anims.Walk);
+            _m.Move(_m._waypoints[_m._currentWayPointIndex].position);
+        }
+
+        public void SetDest(Vector3 dest)
+        {
+            _dest = dest;
+        }
+
+        public override void OnAction()
+        {
+            _m._attackTarget = _m.FindMinDistAttackTarget();
+
+            // 공격 대상이 있다면 쫓는 상태로 변경
+            if (_m._attackTarget)
+            {
+                _m.SetState(new MonsterChaseState());
+                return;
+            }
+            // 공격대상이 없고 마지막 wayPoint에 도착했다면 Idle상태로 변경
+            else if (!_m._attackTarget && _m._currentWayPointIndex < _m._waypoints.Count && _m._navMeshAgent.remainingDistance <= _m._navMeshAgent.stoppingDistance)
+            {
+                _m.SetState(new MonsterIdleState());
+                return;
+            }
+
+            if (_dest != Vector3.zero)
+                _m.Move(_dest);
+        }
+    }
+
+    class MonsterChaseState : CMonsterState
+    {
+        float _chaseDist = 0f;
+        Vector3 _beforePos;
+        public override void OnStart(Monster m)
+        {
+            base.OnStart(m);
+            _beforePos = _m.transform.position;
+            _m.PlayAnim(Anims.Walk);
+        }
+
+        public override void OnAction()
+        {
+            //Debug.Log($"desiredVelocity: {_m._navMeshAgent.desiredVelocity} velocity: {_m._navMeshAgent.velocity}");
+            
+            if (_m._navMeshAgent.velocity.magnitude < 1f)
+                _m._attackTarget = _m.FindMinDistAttackTarget();
+
+            // 공격 대상이 사라졌다면 Idle상태로 변경
+            if (!_m._attackTarget)
+            {
+                _m.SetState(new MonsterIdleState());
+                return;
+            }
+
+            // attackRange 밖에 있고 sightRange 안에 있다면 추격
+            float dist = _m.GetDistanceToAttackTarget();
+            if (dist > _m._stat.AttackRange && dist < _m._stat.SightRange)
+            {
+                _m.Move(_m._attackTarget.transform.position);
+                _chaseDist += Vector3.Distance(_m.transform.position, _beforePos);
+                _beforePos = _m.transform.position;
+
+                // 최대 추격 거리만큼 쫓아갔다면 
+                if (_chaseDist > _m._stat.MaxChaseDistance)
+                {
+                    _m.SetState(new MonsterReturningState());
+                }
+            }
+            // attackRange 안에 있다면 공격 상태로 변경
+            else if (dist < _m._stat.AttackRange)
+            {
+                _m.SetState(new MonsterAttackState());
+            }
+        }
+    }
+
+    class MonsterAttackState : CMonsterState
+    {
+        public override void OnStart(Monster m)
+        {
+            base.OnStart(m);
+            _m._navMeshAgent.isStopped = true;
+            _m._navMeshAgent.velocity = Vector3.zero;
+            _m.PlayAnim(Anims.Idle);
+        }
+
+        public override void OnAction()
+        {
+            if (!_m._attackTarget)
+            {
+                _m.SetState(new MonsterIdleState());
+                return;
+            }
+
+            // 공격 대상이 시야 안에 있다면
+            if (_m.GetDistanceToAttackTarget() < _m._stat.SightRange)
+            {
+                // 공격 대상이 공격 범위 밖에 있다면
+                if (_m.GetDistanceToAttackTarget() > _m._stat.AttackRange)
+                {
+                    _m.SetState(new MonsterChaseState());
+                    return;
+                }
+
+                _m.FaceTarget();
+
+                // 공격 준비가 됐다면 공격
+                if (_m._isAttackReady)
+                {
+                    _m.PlayAnim(Anims.Attack);
+                    _m.AttckTarget();
+                    _m._isAttackReady = false;
+                }
+            }
+            // 공격 대상이 시야 밖에 있다면
+            else
+            {
+                _m._attackTarget = null;
+                _m.SetState(new MonsterReturningState());
+            }
+        }
+
+        public override void OnEnd()
+        {
+            _m._navMeshAgent.isStopped = false;
+        }
+    }
+
+    class MonsterReturningState : CMonsterState
+    {
+        public override void OnStart(Monster m)
+        {
+            base.OnStart(m);
+            Transform nextWaypoint = _m.FindNextWaypoint();
+            if (nextWaypoint != null)
+            {
+                _m.Move(nextWaypoint.position);
+
+                // 다음 이동 방향이 원래 진행 방향과 같다면 그냥 Walking상태로 바꿔서 공격 대상 탐색하며 진행하기
+                // 각도로 한번 더 체크
+                Vector3 moveVec = (nextWaypoint.position - _m.transform.position).normalized;
+                float moveDeg = Mathf.Atan2(moveVec.x, moveVec.z) * Mathf.Rad2Deg;
+                if (moveDeg < 0f)
+                    moveDeg += 360f;
+
+                float minDeg = (_m._moveDeg - _m._degGap < 0f) ? _m._moveDeg - _m._degGap + 360f : _m._moveDeg - _m._degGap;
+                float maxDeg = _m._moveDeg + _m._degGap;
+
+                if (minDeg > maxDeg)
+                {
+                    if ((moveDeg > minDeg && moveDeg < 360f) || (moveDeg > 0f && moveDeg < maxDeg))
+                    {
+                        MonsterMoveState state = new MonsterMoveState();
+                        state.SetDest(nextWaypoint.position);
+                        _m.SetState(state);
+                        return;
+                    }
+                }
+                else
+                {
+                    if ((moveDeg > minDeg) && (moveDeg < maxDeg))
+                    {
+                        MonsterMoveState state = new MonsterMoveState();
+                        state.SetDest(nextWaypoint.position);
+                        _m.SetState(state);
+                        return;
+                    }
+                }
+            }
+
+            _m.PlayAnim(Anims.Walk);
+        }
+
+        public override void OnAction()
+        {
+            if (_m._navMeshAgent.remainingDistance < _m._navMeshAgent.stoppingDistance + 0.1f)
+            {
+                _m.SetState(new MonsterIdleState());
+            }
+        }
+    }
+
+    class MonsterStiffingState : CMonsterState
+    {
+        CMonsterState _beforeState;
+        float _stiffTime = 0.2f;
+
+        public override void OnStart(Monster m)
+        {
+            base.OnStart(m);
+
+            _m.StartCoroutine(_m.CoChangeColor(_stiffTime, Color.red));
+            _m.StartCoroutine(CoChangeBeforeState(_stiffTime));
+        }
+
+        public void SetStiffTime(float stiffTime)
+        {
+            _stiffTime = stiffTime;
+        }
+
+        public void SetBeforeState(CMonsterState beforeState)
+        {
+            _beforeState = beforeState;
+        }
+
+        IEnumerator CoChangeBeforeState(float stiffTime)
+        {
+            yield return new WaitForSeconds(stiffTime);
+            _m.SetState(_beforeState);
+        }
+    }
+
+    class MonsterDieState : CMonsterState
+    {
+        public override void OnStart(Monster m)
+        {
+            base.OnStart(m);
+
+            _m.PlayAnim(Anims.Dead);
+            _m.GetComponent<CapsuleCollider>().enabled = false;
+            _m._navMeshAgent.isStopped = true;
+        }
     }
 }

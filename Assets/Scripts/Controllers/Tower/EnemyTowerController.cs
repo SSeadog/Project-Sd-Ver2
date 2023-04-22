@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class EnemyTowerController : TowerBase
 {
-    public override void Init(Define.ObjectType type)
+    public override void Init()
     {
-        base.Init(type);
-        
-        Managers.Game.enemyTower = gameObject;
+        base.Init();
+
+        _type = Define.ObjectType.EnemyTower;
+        Managers.Game.EnemyTower = gameObject;
     }
 
     public override void OnDead()

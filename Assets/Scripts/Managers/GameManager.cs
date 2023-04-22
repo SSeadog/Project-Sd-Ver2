@@ -10,22 +10,27 @@ public class GameManager
 
     // 게임스테이지와 그 외 스테이지 구분 필요. 게임스테이지에서만 동작해야하는 부분들이 있음(playTime기록 등)
     // -1 = 게임 외 스테이지. 1~n 스테이지 번호로 두며 게임 스테이지로 취급
-    public int stageNum;
+    int stageNum;
 
-    public UIController uIController;
+    UIController uIController;
+    GameObject player;
+    GameObject friendlyTower;
+    GameObject enemyTower;
+    List<Define.spawnItem> spawnInfo;
+    List<GameObject> friendlyMonsters;
+    List<GameObject> enemyMonsters;
 
-    public GameObject friendlyTower;
-    public GameObject enemyTower;
+    public int StageNum { get { return stageNum; } set { stageNum = value; } }
 
-    public List<Define.spawnItem> spawnInfo;
-
-    public List<GameObject> friendlyMonsters;
-    public List<GameObject> enemyMonsters;
-
-    public GameObject player;
+    public UIController UIController { get { return uIController; } set { uIController = value; } }
+    public GameObject Player { get { return player; } set { player = value; } }
+    public GameObject FriendlyTower { get { return friendlyTower; } set { friendlyTower = value; } }
+    public GameObject EnemyTower { get { return enemyTower; } set { enemyTower = value; } }
+    public List<Define.spawnItem> SpawnInfo { get { return spawnInfo; } set { spawnInfo = value; } }
+    public List<GameObject> FriendlyMonsters { get { return friendlyMonsters; } }
+    public List<GameObject> EnemyMonsters { get { return enemyMonsters; } }
 
     public float playTime;
-
     public int spawnedFriendlyMonsterCount;
     public int spawnedEnemyMonsterCount;
     public int killedFriendlyMonsterCount;
@@ -87,7 +92,7 @@ public class GameManager
             case Define.ObjectType.FriendlyRangedMonster:
             case Define.ObjectType.FriendlyPowerMonster:
                 instance.transform.position = friendlyTower.GetComponent<TowerBase>().GetSpawnRoot().position;
-                instance.GetComponent<MonsterStat>().Init(objectType, Managers.Data.monsterStats[objectType.ToString()]);
+                instance.GetComponent<MonsterStat>().Init(objectType, Managers.Data.MonsterStats[objectType.ToString()]);
                 Managers.Game.friendlyMonsters.Add(instance);
                 spawnedFriendlyMonsterCount++;
                 break;
@@ -95,7 +100,7 @@ public class GameManager
             case Define.ObjectType.EnemyRangedMonster:
             case Define.ObjectType.EnemyPowerMonster:
                 instance.transform.position = enemyTower.GetComponent<TowerBase>().GetSpawnRoot().position;
-                instance.GetComponent<MonsterStat>().Init(objectType, Managers.Data.monsterStats[objectType.ToString()]);
+                instance.GetComponent<MonsterStat>().Init(objectType, Managers.Data.MonsterStats[objectType.ToString()]);
                 Managers.Game.enemyMonsters.Add(instance);
                 spawnedEnemyMonsterCount++;
                 break;
@@ -139,7 +144,6 @@ public class GameManager
         // 플레이어 위치 초기화 -> Scene스크립트가 처리
         // 플레이어 체력 초기화 -> Scene스크립트가 처리
         // 타워들 체력 초기화 -> Scene스크립트가 처리
-        Managers.Scene.Clear();
         Managers.Scene.CurrentScene.Init();
     }
 

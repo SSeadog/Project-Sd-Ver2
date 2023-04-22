@@ -18,6 +18,18 @@ public class PlayerController : MonoBehaviour
         Attack
     }
     Anims _curAnim;
+    Anims CurAnim
+    {
+        get { return _curAnim; }
+        set
+        {
+            if (_curAnim != value)
+            {
+                _anim.CrossFade(value.ToString(), 0.1f);
+                _curAnim = value;
+            }
+        }
+    }
     Animator _anim;
 
     bool _isAttack = false;
@@ -73,7 +85,7 @@ public class PlayerController : MonoBehaviour
             _anim.CrossFade("Attack", 0.2f);
             _curAnim = Anims.Attack;
 
-            Invoke("EndFireArrow", 0.5f); // Animation Event로도 실행하고 애니메이션이 블랜드되어 끝까지 실행 못할 것도 대비하여 Invoke도 넣어줌
+            StartCoroutine(EndFireArrow());
         }
     }
     
@@ -113,45 +125,15 @@ public class PlayerController : MonoBehaviour
             return;
 
         if (_moveVec.x > 0)
-        {
-            if (_curAnim.ToString() == "WalkRight")
-                return;
-
-            _anim.CrossFade("WalkRight", 0.1f);
-            _curAnim = Anims.WalkRight;
-        }
+            CurAnim = Anims.WalkRight;
         else if (_moveVec.x < 0)
-        {
-            if (_curAnim.ToString() == "WalkLeft")
-                return;
-
-            _anim.CrossFade("WalkLeft", 0.1f);
-            _curAnim = Anims.WalkLeft;
-        }
-        else if ( _moveVec.z > 0)
-        {
-            if (_curAnim.ToString() == "WalkForward")
-                return;
-
-            _anim.CrossFade("WalkForward", 0.1f);
-            _curAnim = Anims.WalkForward;
-        }
+            CurAnim = Anims.WalkLeft;
+        else if (_moveVec.z > 0)
+            CurAnim = Anims.WalkForward;
         else if (_moveVec.z < 0)
-        {
-            if (_curAnim.ToString() == "WalkBack")
-                return;
-
-            _anim.CrossFade("WalkBack", 0.1f);
-            _curAnim = Anims.WalkBack;
-        }
+            CurAnim = Anims.WalkBack;
         else
-        {
-            if (_curAnim.ToString() == "Idle")
-                return;
-
-            _anim.CrossFade("Idle", 0.1f);
-            _curAnim = Anims.Idle;
-        }
+            CurAnim = Anims.Idle;
     }
 
     public void FireArrow()
@@ -170,8 +152,10 @@ public class PlayerController : MonoBehaviour
         _handedArrow.SetActive(false);
     }
 
-    public void EndFireArrow()
+    IEnumerator EndFireArrow()
     {
+        yield return new WaitForSeconds(0.5f);
+
         _isAttack = false;
         _handedArrow.SetActive(true);
     }

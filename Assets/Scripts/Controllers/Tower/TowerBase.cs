@@ -15,9 +15,8 @@ public abstract class TowerBase : MonoBehaviour
     public List<Transform> LstWayPoint { get { return _lstWaypoint; } }
     List<Transform> _lstWaypoint = new List<Transform>();
 
-    public virtual void Init(Define.ObjectType type)
+    public virtual void Init()
     {
-        _type = type;
         _spawnRoot = transform.Find("spawnRoot");
         _stat = GetComponent<TowerStat>();
         _stat.OnDeadAction += OnDead;
@@ -27,12 +26,12 @@ public abstract class TowerBase : MonoBehaviour
     {
         if (_type == Define.ObjectType.FriendlyTower)
         {
-            _oppositeTower = Managers.Game.enemyTower;
+            _oppositeTower = Managers.Game.EnemyTower;
             _moveDeg = 180f;
         }
         else if (_type == Define.ObjectType.EnemyTower)
         {
-            _oppositeTower = Managers.Game.friendlyTower;
+            _oppositeTower = Managers.Game.FriendlyTower;
             _moveDeg = 0f;
         }
 
@@ -45,7 +44,7 @@ public abstract class TowerBase : MonoBehaviour
     // 좌표로 데이터화해서 로드하는 방식으로 변경하는 게 좋을 듯
     void LoadWayPoints()
     {
-        string path = "Prefabs/WayPoints/GameScene" + Managers.Game.stageNum + "/" + _type.ToString() + "WayPoints";
+        string path = "Prefabs/WayPoints/GameScene" + Managers.Game.StageNum + "/" + _type.ToString() + "WayPoints";
         GameObject waypoints = Resources.Load<GameObject>(path);
         GameObject instance = Instantiate(waypoints, transform);
         instance.name = "Waypoints";

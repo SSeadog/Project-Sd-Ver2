@@ -11,28 +11,26 @@ public abstract class FriendlyMonster : Monster
     {
         base.Init();
 
-        _towerPosition = Managers.Game.enemyTower.transform.position;
+        _towerPosition = Managers.Game.EnemyTower.transform.position;
 
-        _waypoints = Managers.Game.enemyTower.GetComponent<EnemyTowerController>().LstWayPoint;
+        _waypoints = Managers.Game.EnemyTower.GetComponent<EnemyTowerController>().LstWayPoint;
 
-        _currentWayPointIndex = 0;
+        _moveDeg = 0;
     }
 
-    protected override GameObject FindAttackTarget()
+    protected override GameObject FindMinDistAttackTarget()
     {
         GameObject minDistanceGameObject = null;
 
         float minDistance = 9999999f;
 
         // 적 몬스터 중에서 거리가 가장 가까운 녀석 찾기
-        for (int i = 0; i < Managers.Game.enemyMonsters.Count; i++)
+        for (int i = 0; i < Managers.Game.EnemyMonsters.Count; i++)
         {
-            if (Vector3.Distance(transform.position, Managers.Game.enemyMonsters[i].transform.position) - 1f < minDistance)
+            if (Vector3.Distance(transform.position, Managers.Game.EnemyMonsters[i].transform.position) - 1f < minDistance)
             {
-                minDistance = Vector3.Distance(transform.position, Managers.Game.enemyMonsters[i].transform.position) - 1f;
-                minDistanceGameObject = Managers.Game.enemyMonsters[i];
-                _curAttackTargetType = AttackTargetType.Monster;
-                _curTargetSize = 1f;
+                minDistance = Vector3.Distance(transform.position, Managers.Game.EnemyMonsters[i].transform.position) - 1f;
+                minDistanceGameObject = Managers.Game.EnemyMonsters[i];
             }
         }
 
@@ -40,9 +38,7 @@ public abstract class FriendlyMonster : Monster
         if (Vector3.Distance(transform.position, _towerPosition) - 14f < minDistance)
         {
             minDistance = Vector3.Distance(transform.position, _towerPosition) - 14f;
-            minDistanceGameObject = Managers.Game.enemyTower;
-            _curAttackTargetType = AttackTargetType.Tower;
-            _curTargetSize = 14f;
+            minDistanceGameObject = Managers.Game.EnemyTower;
         }
 
         // 가장 가까운 공격대상이 시야 밖에 있다면
@@ -50,6 +46,8 @@ public abstract class FriendlyMonster : Monster
         {
             return null;
         }
+
+        _curTargetSize = minDistanceGameObject.GetComponent<Stat>().Size;
 
         return minDistanceGameObject;
     }

@@ -16,6 +16,7 @@ public class TowerStat : Stat
         _hp = _maxHp;
         _power = 0;
         _speed = 0;
+        _size = 14f;
         _maxResourcePoint = 100;
         _resourcePoint = _maxResourcePoint;
     }

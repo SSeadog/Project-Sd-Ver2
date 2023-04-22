@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class FriendlyTowerController : TowerBase
 {
-    public override void Init(Define.ObjectType type)
+    public override void Init()
     {
-        base.Init(type);
-        
-        Managers.Game.friendlyTower = gameObject;
+        base.Init();
+
+        _type = Define.ObjectType.FriendlyTower;
+        Managers.Game.FriendlyTower = gameObject;
     }
 
     public override void OnDead()

@@ -15,7 +15,7 @@ public class CameraController : MonoBehaviour
 
     public void Init()
     {
-        _target = Managers.Game.player.transform;
+        _target = Managers.Game.Player.transform;
     }
 
     void LateUpdate()
