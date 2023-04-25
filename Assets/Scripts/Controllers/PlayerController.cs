@@ -82,8 +82,8 @@ public class PlayerController : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && !_isAttack)
         {
             _isAttack = true;
-            _anim.CrossFade("Attack", 0.2f);
-            _curAnim = Anims.Attack;
+            //_anim.CrossFade("Attack", 0.1f);
+            //CurAnim = Anims.Attack;
 
             StartCoroutine(EndFireArrow());
         }
@@ -121,10 +121,12 @@ public class PlayerController : MonoBehaviour
 
     void Anim()
     {
-        if (_isAttack)
-            return;
+        //if (_isAttack)
+        //    return;
 
-        if (_moveVec.x > 0)
+        if (_isAttack)
+            CurAnim = Anims.Attack;
+        else if (_moveVec.x > 0)
             CurAnim = Anims.WalkRight;
         else if (_moveVec.x < 0)
             CurAnim = Anims.WalkLeft;
@@ -155,9 +157,9 @@ public class PlayerController : MonoBehaviour
     IEnumerator EndFireArrow()
     {
         yield return new WaitForSeconds(0.5f);
-
         _isAttack = false;
         _handedArrow.SetActive(true);
+        CurAnim = Anims.Idle; // CrossFade로 같은 애니메이션 실행 시 처음부터 재생되지 않아서 공격 종료 후 강제로 Idle을 실행해줌
     }
 
     private bool CheckAttackCollisionTagname(string collder_tag)
