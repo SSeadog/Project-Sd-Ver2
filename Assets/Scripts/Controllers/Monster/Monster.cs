@@ -349,8 +349,6 @@ public abstract class Monster : MonoBehaviour
 
         public override void OnAction()
         {
-            //Debug.Log($"desiredVelocity: {_m._navMeshAgent.desiredVelocity} velocity: {_m._navMeshAgent.velocity}");
-            
             if (_m._navMeshAgent.velocity.magnitude < 1f)
                 _m._attackTarget = _m.FindMinDistAttackTarget();
 
