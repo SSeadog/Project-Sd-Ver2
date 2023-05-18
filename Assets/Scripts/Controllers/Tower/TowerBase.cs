@@ -7,13 +7,13 @@ public abstract class TowerBase : MonoBehaviour
     protected Define.ObjectType _type;
     protected TowerStat _stat;
     protected GameObject _oppositeTower;
-    protected float _moveDeg = 0f;
+    protected float _baseDir = 0f;
     
     Transform _spawnRoot; // 스폰 루트
     float _degGap = 80f;
+    List<Transform> _lstWaypoint = new List<Transform>();
     
     public List<Transform> LstWayPoint { get { return _lstWaypoint; } }
-    List<Transform> _lstWaypoint = new List<Transform>();
 
     public virtual void Init()
     {
@@ -27,18 +27,16 @@ public abstract class TowerBase : MonoBehaviour
         if (_type == Define.ObjectType.FriendlyTower)
         {
             _oppositeTower = Managers.Game.EnemyTower;
-            _moveDeg = 180f;
+            _baseDir = 180f;
         }
         else if (_type == Define.ObjectType.EnemyTower)
         {
             _oppositeTower = Managers.Game.FriendlyTower;
-            _moveDeg = 0f;
+            _baseDir = 0f;
         }
 
         LoadWayPoints();
         SetWaypoints();
-
-        StartCoroutine(CoWaypointsCheck());
     }
 
     // 좌표로 데이터화해서 로드하는 방식으로 변경하는 게 좋을 듯
@@ -50,41 +48,18 @@ public abstract class TowerBase : MonoBehaviour
         instance.name = "Waypoints";
     }
 
-    // waypoints를 위치에 맞게 적절한 순서로 정리하는 함수(내용에 맞게 이름 변경 필요)
+    // * 적절하게 waypoint를 배치하지 않으면 모든 waypoint를 이용하지 않을 수도 있음
+    // * 특정 waypoint에서 적절한 다음 waypoint로 설정되려면 _baseDir - _degGap ~ _baseDir + _degGap사이에 있어야함
     void SetWaypoints()
     {
-        // 1. 반대편 타워에서 가장 가까운 점을 제일 먼저 둠
-        // 2. 해당 점을 시작으로 가장 가까운 다음 점들을 찾아나감
-        // 2-1. 거리가 가장 짧으면서 이동방향에 맞는지를 체크. 이동방향 같은 경우 각도를 통해 판단
-        // * 적절하게 waypoint를 배치하지 않으면 모든 waypoint를 이용하지 않을 수도 있음
-
         Transform[] waypoints = transform.Find("Waypoints").GetComponentsInChildren<Transform>();
-
         Queue<Transform> queue = new Queue<Transform>();
+
+        // 반대편 타워에서 가장 가까운 점을 시작점으로 잡음
         Transform startPoint = _oppositeTower.transform;
-        {
-            float minDist = 99999f;
-            Transform minDistPoint = null;
-            for (int i = 0; i < waypoints.Length; i++)
-            {
-                if (waypoints[i].name == "Waypoints")
-                    continue;
+        queue.Enqueue(startPoint);
 
-                float dist = Vector3.Distance(startPoint.position, waypoints[i].position);
-                if (dist < minDist)
-                {
-                    minDist = dist;
-                    minDistPoint = waypoints[i];
-                }
-            }
-
-            if (minDistPoint != null)
-            {
-                queue.Enqueue(minDistPoint);
-                _lstWaypoint.Add(minDistPoint);
-            }
-        }
-
+        // 해당 점을 시작으로 적절한 이동 방향의 가장 가까운 다음 점들을 찾아나감
         while (queue.Count > 0)
         {
             Transform basePoint = queue.Dequeue();
@@ -101,32 +76,14 @@ public abstract class TowerBase : MonoBehaviour
                     continue;
 
                 float dist = Vector3.Distance(basePoint.position, waypoints[i].position);
+                // 최단 거리인지
                 if (dist < minDist)
                 {
-                    // 최단 거리여도 각도를 이용해 방향을 기준으로 한번 더 체크
-                    Vector3 moveVec = (waypoints[i].position - basePoint.position).normalized;
-                    float curMoveDeg = Mathf.Atan2(moveVec.x, moveVec.z) * Mathf.Rad2Deg;
-                    if (curMoveDeg < 0f)
-                        curMoveDeg += 360f;
-
-                    float minDeg = (_moveDeg - _degGap < 0f) ? _moveDeg - _degGap + 360f : _moveDeg - _degGap;
-                    float maxDeg = _moveDeg + _degGap;
-
-                    if (minDeg > maxDeg)
+                    // 해당점이 적절한 이동방향인지 확인
+                    if (IsRightDirection(basePoint, waypoints[i]) == true)
                     {
-                        if ((curMoveDeg > minDeg && curMoveDeg < 360f) || (curMoveDeg > 0f && curMoveDeg < maxDeg))
-                        {
-                            minDist = dist;
-                            minDistPoint = waypoints[i];
-                        }
-                    }
-                    else
-                    {
-                        if ((curMoveDeg > minDeg) && (curMoveDeg < maxDeg))
-                        {
-                            minDist = dist;
-                            minDistPoint = waypoints[i];
-                        }
+                        minDist = dist;
+                        minDistPoint = waypoints[i];
                     }
                 }
             }
@@ -139,6 +96,32 @@ public abstract class TowerBase : MonoBehaviour
         }
     }
 
+    // 각도를 이용해 적절한 이동 방향인지 확인하는 함수
+    bool IsRightDirection(Transform basePoint, Transform nextPoint)
+    {
+        Vector3 moveVec = (nextPoint.position - basePoint.position).normalized;
+        float curMoveDeg = Mathf.Atan2(moveVec.x, moveVec.z) * Mathf.Rad2Deg;
+        if (curMoveDeg < 0f)
+            curMoveDeg += 360f;
+
+        float minDeg = (_baseDir - _degGap < 0f) ? _baseDir - _degGap + 360f : _baseDir - _degGap;
+        float maxDeg = _baseDir + _degGap;
+
+        if (minDeg > maxDeg)
+        {
+            if ((curMoveDeg > minDeg && curMoveDeg < 360f) || (curMoveDeg > 0f && curMoveDeg < maxDeg))
+                return true;
+        }
+        else
+        {
+            if ((curMoveDeg > minDeg) && (curMoveDeg < maxDeg))
+                return true;
+        }
+
+        return false;
+    }
+
+    // SetWaypoints()함수 디버깅하는 함수
     IEnumerator CoWaypointsCheck()
     {
         foreach (Transform t in _lstWaypoint)

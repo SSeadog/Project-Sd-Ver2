@@ -5,19 +5,17 @@ using UnityEngine;
 
 public class ArrowController : MonoBehaviour
 {
-    Collider _collider;
-    Rigidbody _r;
-
+    private Collider _collider;
+    private Rigidbody rigid;
     private float aliveTime = 5f;
     private float curAliveTime = 0f;
 
-    private Rigidbody rigid;
 
     void Start()
     {
         _collider = GetComponent<Collider>();
-        _collider.enabled = true;
         rigid = GetComponent<Rigidbody>();
+        _collider.enabled = true;
     }
 
     void Update()
@@ -33,8 +31,6 @@ public class ArrowController : MonoBehaviour
             return;
 
         SetRotation();
-
-        Vector3 v = rigid.velocity;
     }
 
     void SetRotation()
@@ -42,7 +38,7 @@ public class ArrowController : MonoBehaviour
         Vector3 v = rigid.velocity;
 
         float combinedVelocity = Mathf.Sqrt(v.x * v.x + v.z * v.z);
-        float fallAngle = (float)(-1 * Mathf.Atan2(v.y, combinedVelocity) * 180 / Math.PI);
+        float fallAngle = (float)(-1 * Mathf.Atan2(v.y, combinedVelocity) * Mathf.Rad2Deg);
 
         transform.eulerAngles = new Vector3(fallAngle, transform.eulerAngles.y, transform.eulerAngles.z);
     }
